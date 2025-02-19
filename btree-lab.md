@@ -277,8 +277,10 @@ for _ in range(5):
 print("\nB-Tree Structure:")
 btree.print_tree()
 
-   ```
-![image](https://github.com/user-attachments/assets/666faad6-c5fd-468c-b738-8af1f56a00c5)
+   ``
+
+   ![Screenshot 2025-02-19 151408](https://github.com/user-attachments/assets/80528029-d1bb-4230-9052-6a3a4dba1b54)
+
 
 
 2. แก้ไข class B-Tree ให้มีการเก็บจำนวน Entry สูงสุด และต่ำสุด แทนการใช้ get_min_keys และ get_max_keys
