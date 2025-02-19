@@ -734,7 +734,11 @@ get_student_info(6301)
 
 ## แบบฝึกหัด
 1. ให้นักศึกษาเพิ่มเมธอดสำหรับลบข้อมูล (key และ data) ออกจาก B-Tree
+   ![image](https://github.com/user-attachments/assets/e15cd460-58e3-44ed-a3a1-f41b307461d0) 
 2. ให้นักศึกษาเพิ่มเมธอดสำหรับอัปเดตข้อมูล (data) สำหรับ key ที่กำหนด
+   ![image](https://github.com/user-attachments/assets/2da0592d-62d6-46d9-babf-2e4b9361c9c6)
 3. ให้นักศึกษาเพิ่มเมธอดสำหรับแสดงข้อมูลทั้งหมดใน B-Tree เรียงตาม key
+   ![image](https://github.com/user-attachments/assets/f1507c19-d436-4c58-aec7-37249
 4. ให้นักศึกษาเพิ่มเมธอดสำหรับค้นหาข้อมูลแบบช่วง (range search)
-   
+   ![Screenshot 2025-02-19 195459](https://github.com/user-attachments/assets/3d61237e-12ee-41a9-94e0-903a7978e2b8)
+
