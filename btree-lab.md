@@ -281,14 +281,14 @@ def _split_child(self, parent, i):
 
 2. แก้ไข class B-Tree ให้มีการเก็บจำนวน Entry สูงสุด และต่ำสุด แทนการใช้ get_min_keys และ get_max_keys
    ```python
-class BTreeNode:
+   class BTreeNode:
     def __init__(self, leaf=True):
         self.leaf = leaf
         self.keys = []
         self.data = []
         self.children = []
 
-class BTree:
+   class BTree:
     def __init__(self, order):
         self.root = BTreeNode()
         self.order = order
@@ -348,18 +348,17 @@ class BTree:
         for child in node.children:
             self.print_tree(child, level + 1)
 
-# สร้าง B-Tree ที่มี order = 3
-btree = BTree(order=3)
+   # สร้าง B-Tree ที่มี order = 3
+   btree = BTree(order=3)
 
-# เพิ่มข้อมูลนักศึกษา 5 คน
-for _ in range(5):
+   # เพิ่มข้อมูลนักศึกษา 5 คน
+   for _ in range(5):
     student_id = int(input("Enter Student ID: "))
     student_name = input("Enter Student Name: ")
     btree.insert(student_id, student_name)
-
-# แสดงโครงสร้างของ B-Tree
-print("\nB-Tree Structure:")
-btree.print_tree()
+   # แสดงโครงสร้างของ B-Tree
+   print("\nB-Tree Structure:")
+   btree.print_tree()
 
    ```
 
