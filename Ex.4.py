@@ -68,18 +68,27 @@ class BTree:
                 if key > node.keys[i][0]:
                     i += 1
             self._insert_non_full(node.children[i], key, value)
-
-    def traverse(self, node=None):
+    
+    def range_search(self, low, high, node=None, result=None):
+        if result is None:
+            result = []
         if node is None:
             node = self.root
-
-        for i in range(len(node.keys)):
+        
+        i = 0
+        while i < len(node.keys) and node.keys[i][0] < low:
+            i += 1
+        
+        while i < len(node.keys) and node.keys[i][0] <= high:
             if not node.leaf:
-                self.traverse(node.children[i])
-            print(f"รหัสนักศึกษา: {node.keys[i][0]}, ข้อมูล: {node.keys[i][1]}")
+                self.range_search(low, high, node.children[i], result)
+            result.append(node.keys[i])
+            i += 1
         
         if not node.leaf:
-            self.traverse(node.children[-1])
+            self.range_search(low, high, node.children[i], result)
+        
+        return result
 
 # สร้าง B-Tree สำหรับระบบทะเบียน
 registration_system = BTree(order=3)
@@ -110,13 +119,21 @@ def get_student_info(student_id):
     student = registration_system.search(student_id)
     if student:
         print(f"รหัสนักศึกษา: {student_id}")
-        print(f"ชื่อ: {student[name]}")
-        print(f"เกรดเฉลี่ย: {student[gpa]}")
-        print(f"วิชาที่ลงทะเบียน: {', '.join(student[courses])}")
+        print(f"ชื่อ: {student['name']}")
+        print(f"เกรดเฉลี่ย: {student['gpa']}")
+        print(f"วิชาที่ลงทะเบียน: {', '.join(student['courses'])}")
     else:
         print(f"ไม่พบข้อมูลนักศึกษารหัส {student_id}")
 
+# ค้นหานักศึกษาในช่วงรหัสที่กำหนด
+def get_students_in_range(low, high):
+    students = registration_system.range_search(low, high)
+    for student_id, info in students:
+        print(f"รหัสนักศึกษา: {student_id}")
+        print(f"ชื่อ: {info['name']}")
+        print(f"เกรดเฉลี่ย: {info['gpa']}")
+        print(f"วิชาที่ลงทะเบียน: {', '.join(info['courses'])}")
+        print("-")
 
-# ทดสอบการแสดงข้อมูลทั้งหมด
-print("\nข้อมูลนักศึกษาทั้งหมด:")
-registration_system.traverse()
+# ทดสอบค้นหาแบบช่วง
+get_students_in_range(6301, 6302)

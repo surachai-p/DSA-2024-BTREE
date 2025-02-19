@@ -69,6 +69,23 @@ class BTree:
                     i += 1
             self._insert_non_full(node.children[i], key, value)
 
+    def update(self, key, new_value):
+        node = self.root
+        while node:
+            i = 0
+            while i < len(node.keys) and key > node.keys[i][0]:
+                i += 1
+            
+            if i < len(node.keys) and node.keys[i][0] == key:
+                node.keys[i] = (key, new_value)  # อัปเดตค่าใหม่
+                return True
+            
+            if node.leaf:
+                return False
+            
+            node = node.children[i]
+        return False
+
 # สร้าง B-Tree สำหรับระบบทะเบียน
 registration_system = BTree(order=3)
 
@@ -104,29 +121,6 @@ def get_student_info(student_id):
     else:
         print(f"ไม่พบข้อมูลนักศึกษารหัส {student_id}")
 
-# ฟังก์ชันอัปเดตข้อมูลนักศึกษา
-class BTree:
-    # (โค้ดเดิมของ BTree)
-
-    def update(self, key, new_value):
-        """อัปเดตข้อมูลของ key ที่กำหนด"""
-        node = self.root
-        while node:
-            i = 0
-            while i < len(node.keys) and key > node.keys[i][0]:
-                i += 1
-
-            if i < len(node.keys) and node.keys[i][0] == key:
-                node.keys[i] = (key, new_value)  # อัปเดตค่าใหม่
-                return True  # อัปเดตสำเร็จ
-
-            if node.leaf:
-                return False  # ไม่พบ key ที่ต้องการอัปเดต
-
-            node = node.children[i]  # ไปยังโหนดลูกถัดไป
-
-        return False  # กรณี key ไม่มีอยู่ในต้นไม้
-
 # ฟังก์ชันสำหรับอัปเดตข้อมูลนักศึกษา
 def update_student_info(student_id, new_info):
     success = registration_system.update(student_id, {
@@ -148,4 +142,3 @@ update_student_info(6301, {
 
 # ตรวจสอบข้อมูลหลังอัปเดต
 get_student_info(6301)
-
