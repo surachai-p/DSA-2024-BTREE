@@ -269,8 +269,8 @@ class BTree:
         print("Level", level, ":", node.keys)
         for child in node.children:
             self.print_tree(child, level + 1)
-btree = BTree(order=3)
-for _ in range(5):
+   btree = BTree(order=3)
+   for _ in range(5):
     student_id = int(input("Enter Student ID: "))
     student_name = input("Enter Student Name: ")
     btree.insert(student_id, student_name)
