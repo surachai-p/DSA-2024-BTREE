@@ -206,13 +206,230 @@ def _split_child(self, parent, i):
 ### ผลการทดลองที่ 2
 1. เขียนโปรแกรมเพื่อเพิ่มข้อมูลนักศึกษา 5 คน รันโปรแกรมและบันทึกรูปผลการรันโปรแกรม
    ```python
-   [บันทึก Code Python ที่นี่]
+   class BTreeNode:
+    def __init__(self, t, leaf=False):
+        self.t = t  # ระดับขั้นต่ำของ B-Tree
+        self.leaf = leaf  # เป็นโหนดใบหรือไม่
+        self.keys = []  # รายการของคีย์
+        self.children = []  # รายการของลูก (ถ้ามี)
+
+    def traverse(self, level=0):
+        print("Level", level, ":", self.keys)
+        if not self.leaf:
+            for child in self.children:
+                child.traverse(level + 1)
+
+    def remove(self, key):
+        if key in self.keys:
+            self.keys.remove(key)
+        else:
+            for child in self.children:
+                child.remove(key)
+    
+    def update(self, key, new_key):
+        if key in self.keys:
+            index = self.keys.index(key)
+            self.keys[index] = new_key
+        else:
+            for child in self.children:
+                child.update(key, new_key)
+    
+    def inorder_traversal(self, result):
+        if not self.leaf:
+            for i in range(len(self.children)):
+                self.children[i].inorder_traversal(result)
+                if i < len(self.keys):
+                    result.append(self.keys[i])
+        else:
+            result.extend(self.keys)
+    
+    def range_search(self, min_key, max_key, result):
+        for key in self.keys:
+            if min_key <= key <= max_key:
+                result.append(key)
+        if not self.leaf:
+            for child in self.children:
+                child.range_search(min_key, max_key, result)
+
+class BTree:
+    def __init__(self, t):
+        self.root = BTreeNode(t, True)
+        self.t = t
+
+    def traverse(self):
+        if self.root:
+            self.root.traverse()
+
+    def remove(self, key):
+        if self.root:
+            self.root.remove(key)
+    
+    def update(self, key, new_key):
+        if self.root:
+            self.root.update(key, new_key)
+    
+    def display_sorted(self):
+        result = []
+        if self.root:
+            self.root.inorder_traversal(result)
+        print("ข้อมูลทั้งหมดเรียงตาม key:", result)
+    
+    def range_search(self, min_key, max_key):
+        result = []
+        if self.root:
+            self.root.range_search(min_key, max_key, result)
+        print(f"ข้อมูลในช่วง {min_key} ถึง {max_key}:", result)
+
+# ตัวอย่างการใช้งาน
+if __name__ == "__main__":
+    btree = BTree(2)  # สร้าง B-Tree ที่มีระดับขั้นต่ำ t=2
+    root = btree.root
+    root.keys = [102, 205]
+    root.children.append(BTreeNode(2, True))
+    root.children.append(BTreeNode(2, True))
+    root.children.append(BTreeNode(2, True))
+    root.leaf = False
+    
+    root.children[0].keys = [101]
+    root.children[1].keys = [203]
+    root.children[2].keys = [305]
+
+    print("แสดงโครงสร้าง B-Tree:")
+    btree.traverse()
+
+    print("เพิ่มข้อมูลนักศึกษา 5 คน:")
+    students = [(103, "Blue"), (201, "Aom"), (150, "Pao"), (250, "Toon"), (300, "Gim")]
+    for key, name in students:
+        root.keys.append(key)
+        root.keys.sort()
+
+    btree.traverse()
+    
+    print("บันทึกผลการรันโปรแกรม")
+    import datetime
+    import sys
+
+    filename = f"btree_output_{datetime.datetime.now().strftime('%Y%m%d_%H%M%S')}.txt"
+    with open(filename, "w") as f:
+        sys.stdout = f
+        btree.traverse()
+        sys.stdout = sys.__stdout__
+    print(f"ผลการรันถูกบันทึกในไฟล์ {filename}")
    ```
-   ![รูปผลการรันโปรแกรม](./YourImagepath/image.png)
+   ![รูปผลการรันโปรแกรม]![image](https://github.com/user-attachments/assets/f20ccbd5-b105-452e-87bb-0c28c663a502)
 
 2. แก้ไข class B-Tree ให้มีการเก็บจำนวน Entry สูงสุด และต่ำสุด แทนการใช้ get_min_keys และ get_max_keys
    ```python
-   [Code Python ที่ปรับปรุงแล้ว]
+   class BTreeNode:
+    def __init__(self, leaf=False):
+        self.leaf = leaf
+        self.keys = []
+        self.children = []
+
+    def traverse(self, level=0):
+        print("Level", level, ":", self.keys)
+        if not self.leaf:
+            for child in self.children:
+                child.traverse(level + 1)
+
+    def remove(self, key):
+        if key in self.keys:
+            self.keys.remove(key)
+        else:
+            for child in self.children:
+                child.remove(key)
+
+    def update(self, key, new_key):
+        if key in self.keys:
+            index = self.keys.index(key)
+            self.keys[index] = new_key
+        else:
+            for child in self.children:
+                child.update(key, new_key)
+
+    def inorder_traversal(self, result):
+        if not self.leaf:
+            for i in range(len(self.children)):
+                self.children[i].inorder_traversal(result)
+                if i < len(self.keys):
+                    result.append(self.keys[i])
+        else:
+            result.extend(self.keys)
+
+    def range_search(self, min_key, max_key, result):
+        for key in self.keys:
+            if min_key <= key <= max_key:
+                result.append(key)
+        if not self.leaf:
+            for child in self.children:
+                child.range_search(min_key, max_key, result)
+
+class BTree:
+    def __init__(self, t):
+        self.root = BTreeNode(True)
+        self.t = t
+        self.min_entries = t - 1
+        self.max_entries = 2 * t - 1
+
+    def traverse(self):
+        if self.root:
+            self.root.traverse()
+
+    def remove(self, key):
+        if self.root:
+            self.root.remove(key)
+
+    def update(self, key, new_key):
+        if self.root:
+            self.root.update(key, new_key)
+
+    def display_sorted(self):
+        result = []
+        if self.root:
+            self.root.inorder_traversal(result)
+        print("ข้อมูลทั้งหมดเรียงตาม key:", result)
+
+    def range_search(self, min_key, max_key):
+        result = []
+        if self.root:
+            self.root.range_search(min_key, max_key, result)
+        print(f"ข้อมูลในช่วง {min_key} ถึง {max_key}:", result)
+
+# ตัวอย่างการใช้งาน
+if __name__ == "__main__":
+    btree = BTree(2)  # สร้าง B-Tree ที่มีระดับขั้นต่ำ t=2
+    root = btree.root
+    root.keys = [102, 205]
+    root.children.append(BTreeNode(True))
+    root.children.append(BTreeNode(True))
+    root.children.append(BTreeNode(True))
+    root.leaf = False
+
+    root.children[0].keys = [101]
+    root.children[1].keys = [203]
+    root.children[2].keys = [305]
+
+    print("แสดงโครงสร้าง B-Tree:")
+    btree.traverse()
+
+    print("เพิ่มข้อมูลนักศึกษา 5 คน:")
+    students = [(103, "Alice"), (201, "Bob"), (150, "Charlie"), (250, "David"), (300, "Eve")]
+    for key, name in students:
+        root.keys.append(key)
+        root.keys.sort()
+
+    btree.traverse()
+
+    print("บันทึกผลการรันโปรแกรม")
+    import datetime
+    import sys
+
+    filename = f"btree_output_{datetime.datetime.now().strftime('%Y%m%d_%H%M%S')}.txt"
+    with open(filename, "w") as f:
+        sys.stdout = f
+        btree.traverse()
+        sys.stdout = sys.__stdout__
+    print(f"ผลการรันถูกบันทึกในไฟล์ {filename}")
    ```
 
 
@@ -250,9 +467,129 @@ def search(self, key):
 ### ผลการทดลอง
 1. เขียนโปรแกรมเพื่อทดสอบการค้นหาข้อมูลใน B-Tree ตามข้อมูลที่ได้เพิ่มในการทดลองก่อนหน้า
    ```python
-   [บันทึก Code Python ที่นี่]
+   class BTreeNode:
+    def __init__(self, leaf=True):
+        self.leaf = leaf
+        self.keys = []
+        self.data = []
+        self.children = []
+
+    class BTree:
+    def __init__(self, order):
+        self.root = None
+        self.order = order
+    
+    def get_min_keys(self):
+        return (self.order // 2) - 1 if self.order % 2 == 0 else self.order // 2
+    
+    def get_max_keys(self):
+        return self.order - 1
+
+    def insert(self, key, data):
+        if self.root is None:
+            self.root = BTreeNode()
+            self.root.keys.append(key)
+            self.root.data.append(data)
+            return
+        
+        if len(self.root.keys) == self.get_max_keys():
+            new_root = BTreeNode(leaf=False)
+            new_root.children.append(self.root)
+            self._split_child(new_root, 0)
+            self.root = new_root
+        
+        self._insert_non_full(self.root, key, data)
+
+    def _insert_non_full(self, node, key, data):
+        i = len(node.keys) - 1
+        
+        if node.leaf:
+            while i >= 0 and key < node.keys[i]:
+                i -= 1
+            i += 1
+            node.keys.insert(i, key)
+            node.data.insert(i, data)
+        else:
+            while i >= 0 and key < node.keys[i]:
+                i -= 1
+            i += 1
+            
+            if len(node.children[i].keys) == self.get_max_keys():
+                self._split_child(node, i)
+                if key > node.keys[i]:
+                    i += 1
+                    
+            self._insert_non_full(node.children[i], key, data)
+
+    def _split_child(self, parent, i):
+        order = self.order
+        child = parent.children[i]
+        
+        new_node = BTreeNode(child.leaf)
+        mid = (order - 1) // 2
+        
+        new_node.keys = child.keys[mid+1:]
+        new_node.data = child.data[mid+1:]
+        
+        mid_key = child.keys[mid]
+        mid_data = child.data[mid]
+        
+        child.keys = child.keys[:mid]
+        child.data = child.data[:mid]
+        
+        if not child.leaf:
+            new_node.children = child.children[mid+1:]
+            child.children = child.children[:mid+1]
+        
+        parent.keys.insert(i, mid_key)
+        parent.data.insert(i, mid_data)
+        parent.children.insert(i + 1, new_node)
+
+    def search(self, key):
+        def _search_node(node, key):
+            i = 0
+            while i < len(node.keys) and key > node.keys[i]:
+                i += 1
+                
+            if i < len(node.keys) and key == node.keys[i]:
+                return (node, i)
+                
+            if node.leaf:
+                return None
+                
+            return _search_node(node.children[i], key)
+        
+        if self.root is None:
+            return None
+            
+        result = _search_node(self.root, key)
+        if result:
+            node, index = result
+            return node.data[index]
+        return None
+
+    def main():
+    order = 3
+    btree = BTree(order)
+    
+    data_to_insert = [(10, "A"), (20, "B"), (5, "C"), (6, "D"), (12, "E"), (30, "F"), (7, "G"), (17, "H")]
+    
+    for key, value in data_to_insert:
+        btree.insert(key, value)
+    
+    search_keys = [6, 15, 30, 7, 100]
+    
+    for key in search_keys:
+        result = btree.search(key)
+        if result is not None:
+            print(f"พบ key {key}: ค่า = {result}")
+        else:
+            print(f"ไม่พบ key {key}")
+    
+    if __name__ == "__main__":
+    main()
    ```
-   ![รูปผลการรันโปรแกรม](./YourImagepath/image.png)
+![alt text](image.png)
 
 ### การทดลองที่ 4: การแสดงผล B-Tree
 
@@ -276,9 +613,46 @@ def display(self):
 ### ผลการทดลอง
 1. เขียนโปรแกรมเพื่อทดสอบการแสดงข้อมูลใน B-Tree 
    ```python
-   [บันทึก Code Python ที่นี่]
+   class BTreeNode:
+    def __init__(self, t, leaf=False):
+        self.t = t  # ระดับขั้นต่ำของ B-Tree
+        self.leaf = leaf  # เป็นโหนดใบหรือไม่
+        self.keys = []  # รายการของคีย์
+        self.children = []  # รายการของลูก (ถ้ามี)
+
+    def traverse(self, level=0):
+        print("Level", level, ":", self.keys)
+        if not self.leaf:
+            for child in self.children:
+                child.traverse(level + 1)
+
+    class BTree:
+    def __init__(self, t):
+        self.root = BTreeNode(t, True)
+        self.t = t
+
+    def traverse(self):
+        if self.root:
+            self.root.traverse()
+
+    # ตัวอย่างการใช้งาน
+    if __name__ == "__main__":
+    btree = BTree(2)  # สร้าง B-Tree ที่มีระดับขั้นต่ำ t=2
+    root = btree.root
+    root.keys = [10, 20]
+    root.children.append(BTreeNode(2, True))
+    root.children.append(BTreeNode(2, True))
+    root.children.append(BTreeNode(2, True))
+    root.leaf = False
+    
+    root.children[0].keys = [5]
+    root.children[1].keys = [15]
+    root.children[2].keys = [25]
+
+    print("แสดงโครงสร้าง B-Tree:")
+    btree.traverse()
    ```
-   ![รูปผลการรันโปรแกรม](./YourImagepath/image.png)
+   ![รูปผลการรันโปรแกรม]![alt text](image-1.png)
 
 ### การทดลองที่ 5: ตัวอย่างการใช้งานจริง :ระบบทะเบียนนักศึกษา
 
@@ -324,7 +698,289 @@ get_student_info(6301)
 
 ## แบบฝึกหัด
 1. ให้นักศึกษาเพิ่มเมธอดสำหรับลบข้อมูล (key และ data) ออกจาก B-Tree
+class BTreeNode:
+    def __init__(self, t, leaf=False):
+        self.t = t  # ระดับขั้นต่ำของ B-Tree
+        self.leaf = leaf  # เป็นโหนดใบหรือไม่
+        self.keys = []  # รายการของคีย์
+        self.children = []  # รายการของลูก (ถ้ามี)
+
+    def traverse(self, level=0):
+        print("Level", level, ":", self.keys)
+        if not self.leaf:
+            for child in self.children:
+                child.traverse(level + 1)
+
+    def remove(self, key):
+        if key in self.keys:
+            self.keys.remove(key)
+        else:
+            for child in self.children:
+                child.remove(key)
+
+class BTree:
+    def __init__(self, t):
+        self.root = BTreeNode(t, True)
+        self.t = t
+
+    def traverse(self):
+        if self.root:
+            self.root.traverse()
+
+    def remove(self, key):
+        if self.root:
+            self.root.remove(key)
+
+# ตัวอย่างการใช้งาน
+if __name__ == "__main__":
+    btree = BTree(2)  # สร้าง B-Tree ที่มีระดับขั้นต่ำ t=2
+    root = btree.root
+    root.keys = [10, 20]
+    root.children.append(BTreeNode(2, True))
+    root.children.append(BTreeNode(2, True))
+    root.children.append(BTreeNode(2, True))
+    root.leaf = False
+    
+    root.children[0].keys = [5]
+    root.children[1].keys = [15]
+    root.children[2].keys = [25]
+
+    print("แสดงโครงสร้าง B-Tree:")
+    btree.traverse()
+
+    print("ลบค่า 15 จาก B-Tree:")
+    btree.remove(15)
+    btree.traverse()
+![alt text](image-2.png)
 2. ให้นักศึกษาเพิ่มเมธอดสำหรับอัปเดตข้อมูล (data) สำหรับ key ที่กำหนด
+class BTreeNode:
+    def __init__(self, t, leaf=False):
+        self.t = t  # ระดับขั้นต่ำของ B-Tree
+        self.leaf = leaf  # เป็นโหนดใบหรือไม่
+        self.keys = []  # รายการของคีย์
+        self.children = []  # รายการของลูก (ถ้ามี)
+
+    def traverse(self, level=0):
+        print("Level", level, ":", self.keys)
+        if not self.leaf:
+            for child in self.children:
+                child.traverse(level + 1)
+
+    def remove(self, key):
+        if key in self.keys:
+            self.keys.remove(key)
+        else:
+            for child in self.children:
+                child.remove(key)
+    
+    def update(self, key, new_key):
+        if key in self.keys:
+            index = self.keys.index(key)
+            self.keys[index] = new_key
+        else:
+            for child in self.children:
+                child.update(key, new_key)
+
+class BTree:
+    def __init__(self, t):
+        self.root = BTreeNode(t, True)
+        self.t = t
+
+    def traverse(self):
+        if self.root:
+            self.root.traverse()
+
+    def remove(self, key):
+        if self.root:
+            self.root.remove(key)
+    
+    def update(self, key, new_key):
+        if self.root:
+            self.root.update(key, new_key)
+
+# ตัวอย่างการใช้งาน
+if __name__ == "__main__":
+    btree = BTree(2)  # สร้าง B-Tree ที่มีระดับขั้นต่ำ t=2
+    root = btree.root
+    root.keys = [10, 20]
+    root.children.append(BTreeNode(2, True))
+    root.children.append(BTreeNode(2, True))
+    root.children.append(BTreeNode(2, True))
+    root.leaf = False
+    
+    root.children[0].keys = [5]
+    root.children[1].keys = [15]
+    root.children[2].keys = [25]
+
+    print("แสดงโครงสร้าง B-Tree:")
+    btree.traverse()
+
+    print("ลบค่า 15 จาก B-Tree:")
+    btree.remove(15)
+    btree.traverse()
+    
+    print("อัปเดตค่า 10 เป็น 12 ใน B-Tree:")
+    btree.update(10, 12)
+    btree.traverse()
+![alt text](image-3.png)
 3. ให้นักศึกษาเพิ่มเมธอดสำหรับแสดงข้อมูลทั้งหมดใน B-Tree เรียงตาม key
+class BTreeNode:
+    def __init__(self, t, leaf=False):
+        self.t = t  # ระดับขั้นต่ำของ B-Tree
+        self.leaf = leaf  # เป็นโหนดใบหรือไม่
+        self.keys = []  # รายการของคีย์
+        self.children = []  # รายการของลูก (ถ้ามี)
+
+    def traverse(self, level=0):
+        print("Level", level, ":", self.keys)
+        if not self.leaf:
+            for child in self.children:
+                child.traverse(level + 1)
+
+    def remove(self, key):
+        if key in self.keys:
+            self.keys.remove(key)
+        else:
+            for child in self.children:
+                child.remove(key)
+
+class BTree:
+    def __init__(self, t):
+        self.root = BTreeNode(t, True)
+        self.t = t
+
+    def traverse(self):
+        if self.root:
+            self.root.traverse()
+
+    def remove(self, key):
+        if self.root:
+            self.root.remove(key)
+
+# ตัวอย่างการใช้งาน
+if __name__ == "__main__":
+    btree = BTree(2)  # สร้าง B-Tree ที่มีระดับขั้นต่ำ t=2
+    root = btree.root
+    root.keys = [10, 20]
+    root.children.append(BTreeNode(2, True))
+    root.children.append(BTreeNode(2, True))
+    root.children.append(BTreeNode(2, True))
+    root.leaf = False
+    
+    root.children[0].keys = [5]
+    root.children[1].keys = [15]
+    root.children[2].keys = [25]
+
+    print("แสดงโครงสร้าง B-Tree:")
+    btree.traverse()
+
+    print("ลบค่า 15 จาก B-Tree:")
+    btree.remove(15)
+    btree.traverse()
+![alt text](image-4.png)
 4. ให้นักศึกษาเพิ่มเมธอดสำหรับค้นหาข้อมูลแบบช่วง (range search)
-   
+   class BTreeNode:
+    def __init__(self, t, leaf=False):
+        self.t = t  # ระดับขั้นต่ำของ B-Tree
+        self.leaf = leaf  # เป็นโหนดใบหรือไม่
+        self.keys = []  # รายการของคีย์
+        self.children = []  # รายการของลูก (ถ้ามี)
+
+    def traverse(self, level=0):
+        print("Level", level, ":", self.keys)
+        if not self.leaf:
+            for child in self.children:
+                child.traverse(level + 1)
+
+    def remove(self, key):
+        if key in self.keys:
+            self.keys.remove(key)
+        else:
+            for child in self.children:
+                child.remove(key)
+    
+    def update(self, key, new_key):
+        if key in self.keys:
+            index = self.keys.index(key)
+            self.keys[index] = new_key
+        else:
+            for child in self.children:
+                child.update(key, new_key)
+    
+    def inorder_traversal(self, result):
+        if not self.leaf:
+            for i in range(len(self.children)):
+                self.children[i].inorder_traversal(result)
+                if i < len(self.keys):
+                    result.append(self.keys[i])
+        else:
+            result.extend(self.keys)
+    
+    def range_search(self, min_key, max_key, result):
+        for key in self.keys:
+            if min_key <= key <= max_key:
+                result.append(key)
+        if not self.leaf:
+            for child in self.children:
+                child.range_search(min_key, max_key, result)
+
+class BTree:
+    def __init__(self, t):
+        self.root = BTreeNode(t, True)
+        self.t = t
+
+    def traverse(self):
+        if self.root:
+            self.root.traverse()
+
+    def remove(self, key):
+        if self.root:
+            self.root.remove(key)
+    
+    def update(self, key, new_key):
+        if self.root:
+            self.root.update(key, new_key)
+    
+    def display_sorted(self):
+        result = []
+        if self.root:
+            self.root.inorder_traversal(result)
+        print("ข้อมูลทั้งหมดเรียงตาม key:", result)
+    
+    def range_search(self, min_key, max_key):
+        result = []
+        if self.root:
+            self.root.range_search(min_key, max_key, result)
+        print(f"ข้อมูลในช่วง {min_key} ถึง {max_key}:", result)
+
+# ตัวอย่างการใช้งาน
+if __name__ == "__main__":
+    btree = BTree(2)  # สร้าง B-Tree ที่มีระดับขั้นต่ำ t=2
+    root = btree.root
+    root.keys = [10, 20]
+    root.children.append(BTreeNode(2, True))
+    root.children.append(BTreeNode(2, True))
+    root.children.append(BTreeNode(2, True))
+    root.leaf = False
+    
+    root.children[0].keys = [5]
+    root.children[1].keys = [15]
+    root.children[2].keys = [25]
+
+    print("แสดงโครงสร้าง B-Tree:")
+    btree.traverse()
+
+    print("ลบค่า 15 จาก B-Tree:")
+    btree.remove(15)
+    btree.traverse()
+    
+    print("อัปเดตค่า 10 เป็น 12 ใน B-Tree:")
+    btree.update(10, 12)
+    btree.traverse()
+    
+    print("แสดงข้อมูลทั้งหมดเรียงตาม key:")
+    btree.display_sorted()
+    
+    print("ค้นหาข้อมูลในช่วง 5 ถึง 20:")
+    btree.range_search(5, 20)
+![alt text](image-5.png)
