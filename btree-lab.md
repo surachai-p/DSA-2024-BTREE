@@ -203,8 +203,36 @@ def _split_child(self, parent, i):
 1. เขียนโปรแกรมเพื่อเพิ่มข้อมูลนักศึกษา 5 คน รันโปรแกรมและบันทึกรูปผลการรันโปรแกรม
    ```python
    [บันทึก Code Python ที่นี่]
+   # โปรแกรมบันทึกข้อมูลนักศึกษา
+
+students = []
+
+# รับข้อมูลนักศึกษา 5 คน
+for i in range(5):
+    print(f"นักศึกษาคนที่ {i+1}")
+    name = input("ชื่อ: ")
+    student_id = input("รหัสนักศึกษา: ")
+    
+    # เก็บข้อมูลในรูปแบบ Dictionary
+    student = {
+        "name": name,
+        "student_id": student_id
+    }
+    
+    # เพิ่มข้อมูลใน List
+    students.append(student)
+    print()
+
+# แสดงผลข้อมูลนักศึกษาทั้งหมด
+print("ข้อมูลนักศึกษาทั้งหมด:")
+for idx, student in enumerate(students, start=1):
+    print(f"{idx}. ชื่อ: {student['name']}, รหัสนักศึกษา: {student['student_id']}")
+
    ```
-   ![รูปผลการรันโปรแกรม](./YourImagepath/image.png)
+
+   ![image](https://github.com/user-attachments/assets/475d93bd-0e31-4697-b4a0-a8dfd705c26d)
+
+
 
 2. แก้ไข class B-Tree ให้มีการเก็บจำนวน Entry สูงสุด และต่ำสุด แทนการใช้ get_min_keys และ get_max_keys
    ```python
