@@ -205,12 +205,15 @@ def _split_child(self, parent, i):
    [บันทึก Code Python ที่นี่]
    ```
    ![รูปผลการรันโปรแกรม](./YourImagepath/image.png)
+   ![alt text](code2.1.png)
+   ![alt text](<สกรีนช็อต 2025-02-19 154844.png>)
 
 2. แก้ไข class B-Tree ให้มีการเก็บจำนวน Entry สูงสุด และต่ำสุด แทนการใช้ get_min_keys และ get_max_keys
    ```python
    [Code Python ที่ปรับปรุงแล้ว]
    ```
-
+![alt text](code2.2.png)
+![alt text](<สกรีนช็อต 2025-02-19 155009.png>)
 
 ### การทดลองที่ 3: การค้นหาข้อมูลใน B-Tree
 
