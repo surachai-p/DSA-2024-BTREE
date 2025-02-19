@@ -1274,14 +1274,14 @@ def register_student(student_id, info):
 4. ให้นักศึกษาเพิ่มเมธอดสำหรับค้นหาข้อมูลแบบช่วง (range search)
    
    ```python
-class BTreeNode:
+   class BTreeNode:
     def __init__(self, leaf=True):
         self.leaf = leaf
         self.keys = []      # เก็บรหัสนักศึกษา (Key)
         self.data = []      # เก็บชื่อนักศึกษา (Value)
         self.children = []  # เก็บโหนดลูก (ถ้ามี)
 
-class BTree:
+   class BTree:
     def __init__(self, order):
         self.root = None
         self.order = order
@@ -1418,7 +1418,9 @@ class BTree:
       btree.range_search(start_id, end_id)
       
    ```
-# รูป
-![image](https://github.com/user-attachments/assets/0511bef5-3cf3-41de-b5fb-eab5500512b5)
+
+   ![image](https://github.com/user-attachments/assets/9d05975d-558e-4890-bc5d-b404a6a2b260)
+
+
 
 
