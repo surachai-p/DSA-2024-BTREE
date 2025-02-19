@@ -206,13 +206,21 @@ def _split_child(self, parent, i):
 ### ผลการทดลองที่ 2
 1. เขียนโปรแกรมเพื่อเพิ่มข้อมูลนักศึกษา 5 คน รันโปรแกรมและบันทึกรูปผลการรันโปรแกรม
    ```python
-   [บันทึก Code Python ที่นี่]
+   [ บันทึก Code Python ที่นี่]
+  ![alt text](image.png)
+
    ```
-   ![รูปผลการรันโปรแกรม](./YourImagepath/image.png)
+ผลลัพธ์
+
+   ![alt text](image-2.png)
+
+>>>>>>> 7f57a8a7ed12e1d22ea6f8946bb7fb0a28ea33a2
 
 2. แก้ไข class B-Tree ให้มีการเก็บจำนวน Entry สูงสุด และต่ำสุด แทนการใช้ get_min_keys และ get_max_keys
    ```python
    [Code Python ที่ปรับปรุงแล้ว]
+    ![alt text](image-2.png)
+
    ```
 
 
@@ -251,8 +259,13 @@ def search(self, key):
 1. เขียนโปรแกรมเพื่อทดสอบการค้นหาข้อมูลใน B-Tree ตามข้อมูลที่ได้เพิ่มในการทดลองก่อนหน้า
    ```python
    [บันทึก Code Python ที่นี่]
+  ![alt text](image-4.png) 
+  ![alt text](image-5.png)
+
    ```
-   ![รูปผลการรันโปรแกรม](./YourImagepath/image.png)
+   ผลลัพธ์
+   ![alt text](image-3.png)
+  
 
 ### การทดลองที่ 4: การแสดงผล B-Tree
 
@@ -277,8 +290,12 @@ def display(self):
 1. เขียนโปรแกรมเพื่อทดสอบการแสดงข้อมูลใน B-Tree 
    ```python
    [บันทึก Code Python ที่นี่]
+   ![alt text](image-7.png)
+   ![alt text](image-8.png)
+
    ```
-   ![รูปผลการรันโปรแกรม](./YourImagepath/image.png)
+   ผลลัพธ์
+   ![alt text](image-6.png)
 
 ### การทดลองที่ 5: ตัวอย่างการใช้งานจริง :ระบบทะเบียนนักศึกษา
 
@@ -324,7 +341,18 @@ get_student_info(6301)
 
 ## แบบฝึกหัด
 1. ให้นักศึกษาเพิ่มเมธอดสำหรับลบข้อมูล (key และ data) ออกจาก B-Tree
+
+![alt text](image-10.png)
+
 2. ให้นักศึกษาเพิ่มเมธอดสำหรับอัปเดตข้อมูล (data) สำหรับ key ที่กำหนด
+
+![alt text](image-12.png)
+
 3. ให้นักศึกษาเพิ่มเมธอดสำหรับแสดงข้อมูลทั้งหมดใน B-Tree เรียงตาม key
+
+![alt text](image-9.png)
+
 4. ให้นักศึกษาเพิ่มเมธอดสำหรับค้นหาข้อมูลแบบช่วง (range search)
+
+![alt text](image-11.png)
    
