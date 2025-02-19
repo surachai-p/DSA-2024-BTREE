@@ -206,10 +206,9 @@ def _split_child(self, parent, i):
   ![alt text](image.png)
 
    ```
-<<<<<<< HEAD
+ผลลัพธ์
+
    ![alt text](image-2.png)
-=======
-![รูปผลการรันโปรแกรม](./YourImagepath/image.png)
 
 >>>>>>> 7f57a8a7ed12e1d22ea6f8946bb7fb0a28ea33a2
 
@@ -260,6 +259,7 @@ def search(self, key):
   ![alt text](image-5.png)
 
    ```
+   ผลลัพธ์
    ![alt text](image-3.png)
   
 
@@ -290,6 +290,7 @@ def display(self):
    ![alt text](image-8.png)
 
    ```
+   ผลลัพธ์
    ![alt text](image-6.png)
 
 ### การทดลองที่ 5: ตัวอย่างการใช้งานจริง :ระบบทะเบียนนักศึกษา
