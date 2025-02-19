@@ -202,7 +202,6 @@ def _split_child(self, parent, i):
 ### ผลการทดลองที่ 2
 1. เขียนโปรแกรมเพื่อเพิ่มข้อมูลนักศึกษา 5 คน รันโปรแกรมและบันทึกรูปผลการรันโปรแกรม
    ```python
-   [บันทึก Code Python ที่นี่]
 class BTreeNode:
     def __init__(self, leaf=True):
         self.leaf = leaf
@@ -276,7 +275,7 @@ for _ in range(5):
     btree.insert(student_id, student_name)
 print("\nB-Tree Structure:")
 btree.print_tree()
-   ``
+   ```
 
    ![Screenshot 2025-02-19 151408](https://github.com/user-attachments/assets/80528029-d1bb-4230-9052-6a3a4dba1b54)
 
