@@ -544,7 +544,7 @@ def search(self, key):
       # แสดงโครงสร้างของ B-Tree
       btree.display()
       
-      # ✅ ทดสอบการค้นหาข้อมูล
+      # ทดสอบการค้นหาข้อมูล
       search_id = int(input("\nป้อนรหัสนักศึกษาที่ต้องการค้นหา: "))
       result = btree.search(search_id)
       
