@@ -414,7 +414,7 @@ btree.display()
 
 
 
-![image](https://github.com/user-attachments/assets/24ee4db3-3499-4b39-a867-8a5a936e816c)
+
 
 
 ### การทดลองที่ 3: การค้นหาข้อมูลใน B-Tree
@@ -585,7 +585,7 @@ else:
 
 
 
-   ![รูปผลการรันโปรแกรม](./YourImagepath/image.png)
+![image](https://github.com/user-attachments/assets/24ee4db3-3499-4b39-a867-8a5a936e816c)
 
 ### การทดลองที่ 4: การแสดงผล B-Tree
 
