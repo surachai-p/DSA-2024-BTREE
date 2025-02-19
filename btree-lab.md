@@ -205,15 +205,15 @@ def _split_child(self, parent, i):
 ```
 ### ผลการทดลองที่ 2
 1. เขียนโปรแกรมเพื่อเพิ่มข้อมูลนักศึกษา 5 คน รันโปรแกรมและบันทึกรูปผลการรันโปรแกรม
-   ```python
-   [บันทึก Code Python ที่นี่]
-   ```
-   ![รูปผลการรันโปรแกรม](./YourImagepath/image.png)
+ ![image](https://github.com/user-attachments/assets/5d0ac2f5-855a-483b-94a5-96f387f62ac2)
+![image](https://github.com/user-attachments/assets/6ae0bc8c-0c93-4bf9-b135-ce99dd5f8e07)
+
 
 2. แก้ไข class B-Tree ให้มีการเก็บจำนวน Entry สูงสุด และต่ำสุด แทนการใช้ get_min_keys และ get_max_keys
-   ```python
-   [Code Python ที่ปรับปรุงแล้ว]
-   ```
+ ![image](https://github.com/user-attachments/assets/d4d89873-d483-4811-8fc9-73775f8f1a90)
+![image](https://github.com/user-attachments/assets/c610cd29-5dac-431f-87a6-7a5865d29742)
+
+
 
 
 ### การทดลองที่ 3: การค้นหาข้อมูลใน B-Tree
