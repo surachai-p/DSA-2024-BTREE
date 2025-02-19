@@ -811,12 +811,21 @@ class BTree:
         parent.data.insert(i, mid_data)
         parent.children.insert(i + 1, new_node)
 
-    def display(self, node=None, level=0):
+    def search(self, key, node=None):
+        """ ค้นหาข้อมูลจาก B-Tree """
         if node is None:
             node = self.root
-        print('Level', level, 'Keys:', node.keys, 'Data:', node.data)
-        for child in node.children:
-            self.display(child, level + 1)
+        i = 0
+        while i < len(node.keys) and key > node.keys[i]:
+            i += 1
+
+        if i < len(node.keys) and key == node.keys[i]:
+            return node.data[i]
+
+        if node.leaf:
+            return None
+
+        return self.search(key, node.children[i])
 
     def delete(self, key, node=None):
         """ ลบ key และ data ออกจาก B-Tree """
@@ -859,77 +868,73 @@ class BTree:
 
             child = node.children[i]
             if len(child.keys) == self.min_keys:
-                # 🔹 ดึง key จากพี่น้องหรือรวมโหนดถ้าจำเป็น
                 self._balance_child(node, i)
 
             self.delete(key, node.children[i])
 
-    def _get_predecessor(self, node):
-        """ หาค่าที่มากที่สุดของโหนดซ้าย (Predecessor) """
-        while not node.leaf:
-            node = node.children[-1]
-        return node.keys[-1], node.data[-1]
+    def display(self, node=None, level=0):
+        """ แสดงโครงสร้างของ B-Tree """
+        if node is None:
+            node = self.root
+        print('Level', level, 'Keys:', node.keys)
+        for child in node.children:
+            self.display(child, level + 1)
 
-    def _get_successor(self, node):
-        """ หาค่าที่น้อยที่สุดของโหนดขวา (Successor) """
-        while not node.leaf:
-            node = node.children[0]
-        return node.keys[0], node.data[0]
-
-    def _merge_nodes(self, parent, i):
-        """ รวมโหนดที่ key ไม่พอ """
-        child = parent.children[i]
-        sibling = parent.children[i+1]
-
-        child.keys.append(parent.keys[i])
-        child.data.append(parent.data[i])
-        child.keys.extend(sibling.keys)
-        child.data.extend(sibling.data)
-
-        if not child.leaf:
-            child.children.extend(sibling.children)
-
-        del parent.keys[i]
-        del parent.data[i]
-        del parent.children[i+1]
-
-    def _balance_child(self, parent, i):
-        """ รักษาสมดุลของโหนดลูก """
-        child = parent.children[i]
-        if i > 0 and len(parent.children[i-1].keys) > self.min_keys:
-            sibling = parent.children[i-1]
-            child.keys.insert(0, parent.keys[i-1])
-            child.data.insert(0, parent.data[i-1])
-            parent.keys[i-1] = sibling.keys.pop()
-            parent.data[i-1] = sibling.data.pop()
-            if not sibling.leaf:
-                child.children.insert(0, sibling.children.pop())
-        elif i < len(parent.children)-1 and len(parent.children[i+1].keys) > self.min_keys:
-            sibling = parent.children[i+1]
-            child.keys.append(parent.keys[i])
-            child.data.append(parent.data[i])
-            parent.keys[i] = sibling.keys.pop(0)
-            parent.data[i] = sibling.data.pop(0)
-            if not sibling.leaf:
-                child.children.append(sibling.children.pop(0))
-        else:
-            self._merge_nodes(parent, i)
-
-      # ทดสอบลบข้อมูล
-      btree = BTree(order=3)
-      students = [(101, "Alice"), (203, "Bob"), (150, "Charlie"), (99, "David"), (175, "Eve")]
-      for sid, name in students:
-          btree.insert(sid, name)
+      #  สร้าง B-Tree สำหรับระบบทะเบียน
+      registration_system = BTree(order=3)
       
+      #  เพิ่มข้อมูลนักศึกษา
+      def register_student(student_id, info):
+          registration_system.insert(student_id, {
+              "name": info["name"],
+              "gpa": info["gpa"],
+              "courses": info["courses"]
+          })
+      
+      #  ลบข้อมูลนักศึกษา
+      def delete_student(student_id):
+          registration_system.delete(student_id)
+          print(f"ลบรหัสนักศึกษา {student_id} สำเร็จ")
+      
+      #  ค้นหาข้อมูลนักศึกษา
+      def get_student_info(student_id):
+          student = registration_system.search(student_id)
+          if student:
+              print(f"\nรหัสนักศึกษา: {student_id}")
+              print(f"ชื่อ: {student['name']}")
+              print(f"เกรดเฉลี่ย: {student['gpa']}")
+              print(f"วิชาที่ลงทะเบียน: {', '.join(student['courses'])}")
+          else:
+              print(f"\nไม่พบข้อมูลนักศึกษารหัส {student_id}")
+      
+      #  เพิ่มข้อมูลตัวอย่าง
+      register_student(6301, {
+          "name": "สมชาย ใจดี",
+          "gpa": 3.75,
+          "courses": ["CS101", "CS102"]
+      })
+      
+      register_student(6302, {
+          "name": "สมหญิง รักเรียน",
+          "gpa": 3.85,
+          "courses": ["CS101", "MATH101"]
+      })
+      
+      #  แสดงโครงสร้าง B-Tree
       print("\n🔹 โครงสร้าง B-Tree ก่อนลบ:")
-      btree.display()
+      registration_system.display()
       
-      delete_id = int(input("\nป้อนรหัสที่ต้องการลบ: "))
-      btree.delete(delete_id)
+      #  ทดสอบลบข้อมูล
+      delete_student(6301)
       
+      #  แสดงโครงสร้าง B-Tree หลังลบ
       print("\n🔹 โครงสร้าง B-Tree หลังลบ:")
-      btree.display()
-
+      registration_system.display()
+      
+      #  ทดสอบค้นหาหลังลบ
+      get_student_info(6301)
+      get_student_info(6302)
+      
 
 ```
 2. ให้นักศึกษาเพิ่มเมธอดสำหรับอัปเดตข้อมูล (data) สำหรับ key ที่กำหนด
