@@ -279,7 +279,8 @@ def display(self):
    ```python
    [บันทึก Code Python ที่นี่]
    ```
-   ![รูปผลการรันโปรแกรม](./YourImagepath/image.png)
+   ![alt text](Picture/code4.png)
+   ![alt text](<Picture/สกรีนช็อต 2025-02-19 162118.png>)
 
 ### การทดลองที่ 5: ตัวอย่างการใช้งานจริง :ระบบทะเบียนนักศึกษา
 
