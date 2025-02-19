@@ -268,13 +268,13 @@ class BTree:
         print("Level", level, ":", node.keys)
         for child in node.children:
             self.print_tree(child, level + 1)
-btree = BTree(order=3)
-for _ in range(5):
+   btree = BTree(order=3)
+   for _ in range(5):
     student_id = int(input("Enter Student ID: "))
     student_name = input("Enter Student Name: ")
     btree.insert(student_id, student_name)
-print("\nB-Tree Structure:")
-btree.print_tree()
+   print("\nB-Tree Structure:")
+   btree.print_tree()
    ```
 
    ![Screenshot 2025-02-19 151408](https://github.com/user-attachments/assets/80528029-d1bb-4230-9052-6a3a4dba1b54)
