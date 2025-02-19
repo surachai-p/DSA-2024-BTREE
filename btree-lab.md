@@ -206,7 +206,12 @@ def _split_child(self, parent, i):
   ![alt text](image.png)
 
    ```
+<<<<<<< HEAD
    ![alt text](image-2.png)
+=======
+![รูปผลการรันโปรแกรม](./YourImagepath/image.png)
+
+>>>>>>> 7f57a8a7ed12e1d22ea6f8946bb7fb0a28ea33a2
 
 2. แก้ไข class B-Tree ให้มีการเก็บจำนวน Entry สูงสุด และต่ำสุด แทนการใช้ get_min_keys และ get_max_keys
    ```python
