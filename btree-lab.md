@@ -941,6 +941,196 @@ class BTree:
 ![image](https://github.com/user-attachments/assets/9adf7cb7-32b2-40b8-943e-4d00730c4fa6)
 
 2. ให้นักศึกษาเพิ่มเมธอดสำหรับอัปเดตข้อมูล (data) สำหรับ key ที่กำหนด
+ ```python
+class BTreeNode:
+   def __init__(self, leaf=True):
+       self.leaf = leaf
+       self.keys = []
+       self.data = []
+       self.children = []
+
+class BTree:
+   def __init__(self, order):
+       self.root = None
+       self.order = order
+       self.max_keys = order - 1
+       self.min_keys = (order // 2) - 1 if order % 2 == 0 else order // 2
+
+   def insert(self, key, data):
+       if self.root is None:
+           self.root = BTreeNode()
+           self.root.keys.append(key)
+           self.root.data.append(data)
+           return
+       
+       if len(self.root.keys) == self.max_keys:
+           new_root = BTreeNode(leaf=False)
+           new_root.children.append(self.root)
+           self._split_child(new_root, 0)
+           self.root = new_root
+       
+       self._insert_non_full(self.root, key, data)
+
+   def _insert_non_full(self, node, key, data):
+       i = len(node.keys) - 1
+       
+       if node.leaf:
+           while i >= 0 and key < node.keys[i]:
+               i -= 1
+           i += 1
+           node.keys.insert(i, key)
+           node.data.insert(i, data)
+       else:
+           while i >= 0 and key < node.keys[i]:
+               i -= 1
+           i += 1
+           
+           if len(node.children[i].keys) == self.max_keys:
+               self._split_child(node, i)
+               if key > node.keys[i]:
+                   i += 1
+                   
+           self._insert_non_full(node.children[i], key, data)
+
+   def _split_child(self, parent, i):
+       child = parent.children[i]
+       new_node = BTreeNode(child.leaf)
+       mid = self.order // 2
+
+       mid_key = child.keys[mid]
+       mid_data = child.data[mid]
+       
+       new_node.keys = child.keys[mid+1:]
+       new_node.data = child.data[mid+1:]
+       
+       child.keys = child.keys[:mid]
+       child.data = child.data[:mid]
+       
+       if not child.leaf:
+           new_node.children = child.children[mid+1:]
+           child.children = child.children[:mid+1]
+       
+       parent.keys.insert(i, mid_key)
+       parent.data.insert(i, mid_data)
+       parent.children.insert(i + 1, new_node)
+
+   def search(self, key, node=None):
+       if node is None:
+           node = self.root
+       i = 0
+       while i < len(node.keys) and key > node.keys[i]:
+           i += 1
+
+       if i < len(node.keys) and key == node.keys[i]:
+           return node.data[i]
+
+       if node.leaf:
+           return None
+
+       return self.search(key, node.children[i])
+
+   def update(self, key, new_data, node=None):
+       """ อัปเดตข้อมูลของ Key ที่กำหนด """
+       if node is None:
+           node = self.root
+       
+       i = 0
+       while i < len(node.keys) and key > node.keys[i]:
+           i += 1
+       
+       if i < len(node.keys) and node.keys[i] == key:
+           node.data[i] = new_data  # 🔹 อัปเดตข้อมูลใหม่
+           print(f"อัปเดตรหัสนักศึกษา {key} สำเร็จ")
+           return True
+
+       if node.leaf:
+           print(f"ไม่พบรหัสนักศึกษา {key} ใน B-Tree")
+           return False
+
+       return self.update(key, new_data, node.children[i])
+
+   def display(self, node=None, level=0):
+       """ แสดงโครงสร้างของ B-Tree """
+       if node is None:
+           node = self.root
+       print('Level', level, 'Keys:', node.keys)
+       for child in node.children:
+           self.display(child, level + 1)
+      
+      # ✅ สร้าง B-Tree สำหรับระบบทะเบียน
+      registration_system = BTree(order=3)
+      
+      # ✅ เพิ่มข้อมูลนักศึกษา
+      def register_student(student_id, info):
+          registration_system.insert(student_id, {
+              "name": info["name"],
+              "gpa": info["gpa"],
+              "courses": info["courses"]
+          })
+      
+      # ✅ อัปเดตข้อมูลนักศึกษา
+      def update_student(student_id, new_info):
+          success = registration_system.update(student_id, {
+              "name": new_info["name"],
+              "gpa": new_info["gpa"],
+              "courses": new_info["courses"]
+          })
+          
+          if not success:
+              print(f"ไม่สามารถอัปเดตข้อมูลนักศึกษารหัส {student_id} ได้")
+      
+      # ✅ ลบข้อมูลนักศึกษา
+      def delete_student(student_id):
+          registration_system.delete(student_id)
+          print(f"ลบรหัสนักศึกษา {student_id} สำเร็จ")
+      
+      # ✅ ค้นหาข้อมูลนักศึกษา
+      def get_student_info(student_id):
+          student = registration_system.search(student_id)
+          if student:
+              print(f"\nรหัสนักศึกษา: {student_id}")
+              print(f"ชื่อ: {student['name']}")
+              print(f"เกรดเฉลี่ย: {student['gpa']}")
+              print(f"วิชาที่ลงทะเบียน: {', '.join(student['courses'])}")
+          else:
+              print(f"\nไม่พบข้อมูลนักศึกษารหัส {student_id}")
+      
+      # ✅ เพิ่มข้อมูลตัวอย่าง
+      register_student(6301, {
+          "name": "สมชาย ใจดี",
+          "gpa": 3.75,
+          "courses": ["CS101", "CS102"]
+      })
+      
+      register_student(6302, {
+          "name": "สมหญิง รักเรียน",
+          "gpa": 3.85,
+          "courses": ["CS101", "MATH101"]
+      })
+      
+      # ✅ แสดงโครงสร้าง B-Tree ก่อนอัปเดต
+      print("\n🔹 โครงสร้าง B-Tree ก่อนอัปเดต:")
+      registration_system.display()
+      
+      # ✅ อัปเดตข้อมูลนักศึกษา 6301
+      update_student(6301, {
+          "name": "สมชาย แก้ไข",
+          "gpa": 3.90,
+          "courses": ["CS201", "CS202"]
+      })
+      
+      # ✅ แสดงโครงสร้าง B-Tree หลังอัปเดต
+      print("\n🔹 โครงสร้าง B-Tree หลังอัปเดต:")
+      registration_system.display()
+      
+      # ✅ ทดสอบค้นหาหลังอัปเดต
+      get_student_info(6301)
+      get_student_info(6302)
+
+```
+
+![image](https://github.com/user-attachments/assets/40764abe-f589-41d9-94a8-2299b42ac674)
+
 3. ให้นักศึกษาเพิ่มเมธอดสำหรับแสดงข้อมูลทั้งหมดใน B-Tree เรียงตาม key
 4. ให้นักศึกษาเพิ่มเมธอดสำหรับค้นหาข้อมูลแบบช่วง (range search)
    
