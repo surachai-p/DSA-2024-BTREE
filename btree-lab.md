@@ -208,7 +208,7 @@ def _split_child(self, parent, i):
         self.keys = []
         self.data = []
         self.children = []
-class BTree:
+   class BTree:
     def __init__(self, order):
         self.root = BTreeNode()
         self.order = order
@@ -270,9 +270,9 @@ class BTree:
             self.print_tree(child, level + 1)
    btree = BTree(order=3)
    for _ in range(5):
-    student_id = int(input("Enter Student ID: "))
-    student_name = input("Enter Student Name: ")
-    btree.insert(student_id, student_name)
+   student_id = int(input("Enter Student ID: "))
+   student_name = input("Enter Student Name: ")
+   btree.insert(student_id, student_name)
    print("\nB-Tree Structure:")
    btree.print_tree()
    ```
