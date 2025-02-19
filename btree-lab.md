@@ -215,7 +215,7 @@ def _split_child(self, parent, i):
         self.data = []
         self.children = []
 
-class BTree:
+   class BTree:
     def __init__(self, order):
         self.root = None
         self.order = order
@@ -262,46 +262,46 @@ class BTree:
                     
             self._insert_non_full(node.children[i], key, data)
 
-    def _split_child(self, parent, i):
-        order = self.order
-        child = parent.children[i]
-        new_node = BTreeNode(child.leaf)
-        mid = order // 2
-        
-        mid_key = child.keys[mid]
-        mid_data = child.data[mid]
-        
-        new_node.keys = child.keys[mid+1:]
-        new_node.data = child.data[mid+1:]
-        
-        child.keys = child.keys[:mid]
-        child.data = child.data[:mid]
-        
-        if not child.leaf:
-            new_node.children = child.children[mid+1:]
-            child.children = child.children[:mid+1]
-        
-        parent.keys.insert(i, mid_key)
-        parent.data.insert(i, mid_data)
-        parent.children.insert(i + 1, new_node)
-
-    def display(self, node=None, level=0):
-        if node is None:
-            node = self.root
-        print('Level', level, 'Keys:', node.keys)
-        for child in node.children:
-            self.display(child, level + 1)
-            btree = BTree(order=3)
-
-        num_students = int(input("ป้อนจำนวนนักศึกษา: "))
-        for _ in range(num_students):
-        sid = int(input("ป้อนรหัสนักศึกษา: "))
-        name = input("ป้อนชื่อนักศึกษา: ")
-        btree.insert(sid, name)
-        btree.display()
+          def _split_child(self, parent, i):
+              order = self.order
+              child = parent.children[i]
+              new_node = BTreeNode(child.leaf)
+              mid = order // 2
+              
+              mid_key = child.keys[mid]
+              mid_data = child.data[mid]
+              
+              new_node.keys = child.keys[mid+1:]
+              new_node.data = child.data[mid+1:]
+              
+              child.keys = child.keys[:mid]
+              child.data = child.data[:mid]
+              
+              if not child.leaf:
+                  new_node.children = child.children[mid+1:]
+                  child.children = child.children[:mid+1]
+              
+              parent.keys.insert(i, mid_key)
+              parent.data.insert(i, mid_data)
+              parent.children.insert(i + 1, new_node)
+      
+          def display(self, node=None, level=0):
+              if node is None:
+                  node = self.root
+              print('Level', level, 'Keys:', node.keys)
+              for child in node.children:
+                  self.display(child, level + 1)
+                  btree = BTree(order=3)
+      
+              num_students = int(input("ป้อนจำนวนนักศึกษา: "))
+              for _ in range(num_students):
+              sid = int(input("ป้อนรหัสนักศึกษา: "))
+              name = input("ป้อนชื่อนักศึกษา: ")
+              btree.insert(sid, name)
+              btree.display()
 
    ```
-   ![alt text](<Screenshot 2025-02-19 152822.png>)
+![Screenshot 2025-02-19 152822](https://github.com/user-attachments/assets/611396f6-e08c-4079-878f-af2d40d9311c)
 
 2. แก้ไข class B-Tree ให้มีการเก็บจำนวน Entry สูงสุด และต่ำสุด แทนการใช้ get_min_keys และ get_max_keys
    ```python
