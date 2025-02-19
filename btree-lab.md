@@ -1416,13 +1416,9 @@ class BTree:
       end_id = 45678
       print(f"\n📌 รายชื่อนักศึกษาในช่วงรหัส {start_id} ถึง {end_id}:")
       btree.range_search(start_id, end_id)
-
-
-```
-
-![Alt text]((https://github.com/user-attachments/assets/18dcc56a-5641-4d10-b465-6612ecb0a7f5)
-
-![image](https://github.com/user-attachments/assets/18dcc56a-5641-4d10-b465-6612ecb0a7f5).
-![image](https://github.com/user-attachments/assets/89a08062-825c-4e71-81c7-1e263bfab2cd)
+      
+   ```
+# รูป
+![image](https://github.com/user-attachments/assets/0511bef5-3cf3-41de-b5fb-eab5500512b5)
 
 
