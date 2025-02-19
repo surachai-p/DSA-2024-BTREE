@@ -204,7 +204,7 @@ def _split_child(self, parent, i):
 ### โค้ด
    ```python
    [บันทึก Code Python ที่นี่]
-   class BTreeNode:
+  class BTreeNode:
     def __init__(self, leaf=True):
         self.leaf = leaf
         self.keys = []
@@ -300,6 +300,8 @@ for _ in range(num_students):
 
 # แสดงโครงสร้างของ B-Tree
 btree.display()
+
+
 
 
    ```
