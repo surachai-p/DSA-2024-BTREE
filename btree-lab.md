@@ -1420,7 +1420,7 @@ class BTree:
 
 ```
 
-![image](https://github.com/user-attachments/assets/0fe7e510-9cc1-4e14-8bcc-8f7a232a821b)
+      ![image](https://github.com/user-attachments/assets/0fe7e510-9cc1-4e14-8bcc-8f7a232a821b)
 
 
 
