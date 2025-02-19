@@ -438,7 +438,7 @@ def search(self, key):
    ```python
    [บันทึก Code Python ที่นี่]
    ```
-   ![รูปผลการรันโปรแกรม](./YourImagepath/image.png)
+  ![image](https://github.com/user-attachments/assets/0494adb3-980a-4e5e-b31d-217bbc4762f7)
 
 ### การทดลองที่ 4: การแสดงผล B-Tree
 
