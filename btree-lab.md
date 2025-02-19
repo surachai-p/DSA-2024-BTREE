@@ -201,15 +201,170 @@ def _split_child(self, parent, i):
 ```
 ### ผลการทดลองที่ 2
 1. เขียนโปรแกรมเพื่อเพิ่มข้อมูลนักศึกษา 5 คน รันโปรแกรมและบันทึกรูปผลการรันโปรแกรม
-   ```python
-   [บันทึก Code Python ที่นี่]
-   ```
-   ![รูปผลการรันโปรแกรม](./YourImagepath/image.png)
+```python
+   class BTreeNode:
+    def __init__(self, leaf=True):
+        self.leaf = leaf
+        self.keys = []
+        self.data = []
+        self.children = []
+
+class BTree:
+    def __init__(self, order):
+        self.root = None
+        self.order = order
+        self.min_entries = (order + 1) // 2 - 1  # จำนวน key ขั้นต่ำ
+        self.max_entries = order - 1             # จำนวน key สูงสุด
+
+    def insert(self, key, data):
+        if self.root is None:
+            self.root = BTreeNode()
+            self.root.keys.append(key)
+            self.root.data.append(data)
+            return
+
+        if len(self.root.keys) == self.max_entries:
+            new_root = BTreeNode(leaf=False)
+            new_root.children.append(self.root)
+            self._split_child(new_root, 0)
+            self.root = new_root
+
+        self._insert_non_full(self.root, key, data)
+
+    def _insert_non_full(self, node, key, data):
+        i = len(node.keys) - 1
+        if node.leaf:
+            while i >= 0 and key < node.keys[i]:
+                i -= 1
+            node.keys.insert(i + 1, key)
+            node.data.insert(i + 1, data)
+        else:
+            while i >= 0 and key < node.keys[i]:
+                i -= 1
+            i += 1
+            if len(node.children[i].keys) == self.max_entries:
+                self._split_child(node, i)
+                if key > node.keys[i]:
+                    i += 1
+            self._insert_non_full(node.children[i], key, data)
+
+    def _split_child(self, parent, i):
+        order = self.order
+        child = parent.children[i]
+        new_node = BTreeNode(child.leaf)
+        mid = len(child.keys) // 2
+
+        parent.keys.insert(i, child.keys[mid])
+        parent.data.insert(i, child.data[mid])
+        parent.children.insert(i + 1, new_node)
+
+        new_node.keys = child.keys[mid + 1:]
+        new_node.data = child.data[mid + 1:]
+        child.keys = child.keys[:mid]
+        child.data = child.data[:mid]
+
+        if not child.leaf:
+            new_node.children = child.children[mid + 1:]
+            child.children = child.children[:mid + 1]
+# สร้าง B-Tree
+btree = BTree(order=3)
+
+# เพิ่มข้อมูลนักศึกษา
+students = [
+    (102, "Alice"),
+    (205, "Bob"),
+    (150, "Charlie"),
+    (120, "David"),
+    (180, "Eve")
+]
+
+for student_id, info in students:
+    btree.insert(student_id, info)
+
+```
 
 2. แก้ไข class B-Tree ให้มีการเก็บจำนวน Entry สูงสุด และต่ำสุด แทนการใช้ get_min_keys และ get_max_keys
-   ```python
-   [Code Python ที่ปรับปรุงแล้ว]
-   ```
+```python
+   class BTreeNode:
+    def __init__(self, leaf=True):
+        self.leaf = leaf
+        self.keys = []
+        self.data = []
+        self.children = []
+
+class BTree:
+    def __init__(self, order):
+        self.root = None
+        self.order = order
+        self.min_entries = (order + 1) // 2 - 1  # จำนวน key ขั้นต่ำ
+        self.max_entries = order - 1             # จำนวน key สูงสุด
+
+    def insert(self, key, data):
+        if self.root is None:
+            self.root = BTreeNode()
+            self.root.keys.append(key)
+            self.root.data.append(data)
+            return
+
+        if len(self.root.keys) == self.max_entries:
+            new_root = BTreeNode(leaf=False)
+            new_root.children.append(self.root)
+            self._split_child(new_root, 0)
+            self.root = new_root
+
+        self._insert_non_full(self.root, key, data)
+
+    def _insert_non_full(self, node, key, data):
+        i = len(node.keys) - 1
+        if node.leaf:
+            while i >= 0 and key < node.keys[i]:
+                i -= 1
+            node.keys.insert(i + 1, key)
+            node.data.insert(i + 1, data)
+        else:
+            while i >= 0 and key < node.keys[i]:
+                i -= 1
+            i += 1
+            if len(node.children[i].keys) == self.max_entries:
+                self._split_child(node, i)
+                if key > node.keys[i]:
+                    i += 1
+            self._insert_non_full(node.children[i], key, data)
+
+    def _split_child(self, parent, i):
+        order = self.order
+        child = parent.children[i]
+        new_node = BTreeNode(child.leaf)
+        mid = len(child.keys) // 2
+
+        parent.keys.insert(i, child.keys[mid])
+        parent.data.insert(i, child.data[mid])
+        parent.children.insert(i + 1, new_node)
+
+        new_node.keys = child.keys[mid + 1:]
+        new_node.data = child.data[mid + 1:]
+        child.keys = child.keys[:mid]
+        child.data = child.data[:mid]
+
+        if not child.leaf:
+            new_node.children = child.children[mid + 1:]
+            child.children = child.children[:mid + 1]
+
+# สร้าง B-Tree
+btree = BTree(order=3)
+
+# เพิ่มข้อมูลนักศึกษา
+students = [
+    (6301, {"name": "สมชาย ใจดี", "gpa": 3.75, "courses": ["CS101", "CS102"]}),
+    (6302, {"name": "สมหญิง รักเรียน", "gpa": 3.85, "courses": ["CS101", "MATH101"]}),
+    (6303, {"name": "เอกชัย ขยัน", "gpa": 3.60, "courses": ["CS103", "CS104"]}),
+    (6304, {"name": "สายรุ้ง มั่นคง", "gpa": 3.90, "courses": ["CS101", "ENG101"]}),
+    (6305, {"name": "มานะ พากเพียร", "gpa": 3.65, "courses": ["CS102", "MATH102"]})
+]
+
+for student_id, info in students:
+    btree.insert(student_id, info)
+```
 
 
 ### การทดลองที่ 3: การค้นหาข้อมูลใน B-Tree
@@ -243,12 +398,113 @@ def search(self, key):
         return node.data[index]
     return None
 ```
+
 ### ผลการทดลอง
 1. เขียนโปรแกรมเพื่อทดสอบการค้นหาข้อมูลใน B-Tree ตามข้อมูลที่ได้เพิ่มในการทดลองก่อนหน้า
-   ```python
-   [บันทึก Code Python ที่นี่]
-   ```
-   ![รูปผลการรันโปรแกรม](./YourImagepath/image.png)
+```python
+class BTreeNode:
+    def __init__(self, leaf=True):
+        self.leaf = leaf
+        self.keys = []
+        self.data = []
+        self.children = []
+
+class BTree:
+    def __init__(self, order):
+        self.root = None
+        self.order = order
+        self.min_entries = (order + 1) // 2 - 1  # จำนวน key ขั้นต่ำ
+        self.max_entries = order - 1             # จำนวน key สูงสุด
+
+    def insert(self, key, data):
+        if self.root is None:
+            self.root = BTreeNode()
+            self.root.keys.append(key)
+            self.root.data.append(data)
+            return
+
+        if len(self.root.keys) == self.max_entries:
+            new_root = BTreeNode(leaf=False)
+            new_root.children.append(self.root)
+            self._split_child(new_root, 0)
+            self.root = new_root
+
+        self._insert_non_full(self.root, key, data)
+
+    def _insert_non_full(self, node, key, data):
+        i = len(node.keys) - 1
+        if node.leaf:
+            while i >= 0 and key < node.keys[i]:
+                i -= 1
+            node.keys.insert(i + 1, key)
+            node.data.insert(i + 1, data)
+        else:
+            while i >= 0 and key < node.keys[i]:
+                i -= 1
+            i += 1
+            if len(node.children[i].keys) == self.max_entries:
+                self._split_child(node, i)
+                if key > node.keys[i]:
+                    i += 1
+            self._insert_non_full(node.children[i], key, data)
+
+    def _split_child(self, parent, i):
+        order = self.order
+        child = parent.children[i]
+        new_node = BTreeNode(child.leaf)
+        mid = len(child.keys) // 2
+
+        parent.keys.insert(i, child.keys[mid])
+        parent.data.insert(i, child.data[mid])
+        parent.children.insert(i + 1, new_node)
+
+        new_node.keys = child.keys[mid + 1:]
+        new_node.data = child.data[mid + 1:]
+        child.keys = child.keys[:mid]
+        child.data = child.data[:mid]
+
+        if not child.leaf:
+            new_node.children = child.children[mid + 1:]
+            child.children = child.children[:mid + 1]
+            
+def search(self, key):
+    def _search_node(node, key):
+        i = 0
+        while i < len(node.keys) and key > node.keys[i]:
+            i += 1
+        if i < len(node.keys) and key == node.keys[i]:
+            return node.data[i]
+        if node.leaf:
+            return None
+        return _search_node(node.children[i], key)
+
+    return _search_node(self.root, key) if self.root else None
+
+BTree.search = search
+
+# สร้าง B-Tree
+btree = BTree(order=3)
+
+# เพิ่มข้อมูลนักศึกษา
+students = [
+    (6301, {"name": "สมชาย ใจดี", "gpa": 3.75, "courses": ["CS101", "CS102"]}),
+    (6302, {"name": "สมหญิง รักเรียน", "gpa": 3.85, "courses": ["CS101", "MATH101"]}),
+    (6303, {"name": "เอกชัย ขยัน", "gpa": 3.60, "courses": ["CS103", "CS104"]}),
+    (6304, {"name": "สายรุ้ง มั่นคง", "gpa": 3.90, "courses": ["CS101", "ENG101"]}),
+    (6305, {"name": "มานะ พากเพียร", "gpa": 3.65, "courses": ["CS102", "MATH102"]})
+]
+
+for student_id, info in students:
+    btree.insert(student_id, info)
+
+student_info = btree.search(6302)
+if student_info:
+    print(f"พบ: {student_info['name']} | GPA: {student_info['gpa']} | วิชา: {', '.join(student_info['courses'])}")
+else:
+    print("ไม่พบข้อมูลนักศึกษา")
+```
+
+![alt text](image.png)
 
 ### การทดลองที่ 4: การแสดงผล B-Tree
 
@@ -271,10 +527,117 @@ def display(self):
 ```
 ### ผลการทดลอง
 1. เขียนโปรแกรมเพื่อทดสอบการแสดงข้อมูลใน B-Tree 
-   ```python
-   [บันทึก Code Python ที่นี่]
-   ```
-   ![รูปผลการรันโปรแกรม](./YourImagepath/image.png)
+```python
+class BTreeNode:
+    def __init__(self, leaf=True):
+        self.leaf = leaf
+        self.keys = []
+        self.data = []
+        self.children = []
+
+class BTree:
+    def __init__(self, order):
+        self.root = None
+        self.order = order
+        self.min_entries = (order + 1) // 2 - 1  # จำนวน key ขั้นต่ำ
+        self.max_entries = order - 1             # จำนวน key สูงสุด
+
+    def insert(self, key, data):
+        if self.root is None:
+            self.root = BTreeNode()
+            self.root.keys.append(key)
+            self.root.data.append(data)
+            return
+
+        if len(self.root.keys) == self.max_entries:
+            new_root = BTreeNode(leaf=False)
+            new_root.children.append(self.root)
+            self._split_child(new_root, 0)
+            self.root = new_root
+
+        self._insert_non_full(self.root, key, data)
+
+    def _insert_non_full(self, node, key, data):
+        i = len(node.keys) - 1
+        if node.leaf:
+            while i >= 0 and key < node.keys[i]:
+                i -= 1
+            node.keys.insert(i + 1, key)
+            node.data.insert(i + 1, data)
+        else:
+            while i >= 0 and key < node.keys[i]:
+                i -= 1
+            i += 1
+            if len(node.children[i].keys) == self.max_entries:
+                self._split_child(node, i)
+                if key > node.keys[i]:
+                    i += 1
+            self._insert_non_full(node.children[i], key, data)
+
+    def _split_child(self, parent, i):
+        order = self.order
+        child = parent.children[i]
+        new_node = BTreeNode(child.leaf)
+        mid = len(child.keys) // 2
+
+        parent.keys.insert(i, child.keys[mid])
+        parent.data.insert(i, child.data[mid])
+        parent.children.insert(i + 1, new_node)
+
+        new_node.keys = child.keys[mid + 1:]
+        new_node.data = child.data[mid + 1:]
+        child.keys = child.keys[:mid]
+        child.data = child.data[:mid]
+
+        if not child.leaf:
+            new_node.children = child.children[mid + 1:]
+            child.children = child.children[:mid + 1]
+            
+def search(self, key):
+    def _search_node(node, key):
+        i = 0
+        while i < len(node.keys) and key > node.keys[i]:
+            i += 1
+        if i < len(node.keys) and key == node.keys[i]:
+            return node.data[i]
+        if node.leaf:
+            return None
+        return _search_node(node.children[i], key)
+
+    return _search_node(self.root, key) if self.root else None
+
+BTree.search = search
+
+def display(self):
+    def _display(node, level=0):
+        if node:
+            print("  " * level + f"Keys: {node.keys}")
+            print("  " * level + f"Data: {[d['name'] for d in node.data]}")
+            for child in node.children:
+                _display(child, level + 1)
+    _display(self.root)
+
+BTree.display = display
+
+    
+# สร้าง B-Tree
+btree = BTree(order=3)
+
+# เพิ่มข้อมูลนักศึกษา
+students = [
+    (6301, {"name": "สมชาย ใจดี", "gpa": 3.75, "courses": ["CS101", "CS102"]}),
+    (6302, {"name": "สมหญิง รักเรียน", "gpa": 3.85, "courses": ["CS101", "MATH101"]}),
+    (6303, {"name": "เอกชัย ขยัน", "gpa": 3.60, "courses": ["CS103", "CS104"]}),
+    (6304, {"name": "สายรุ้ง มั่นคง", "gpa": 3.90, "courses": ["CS101", "ENG101"]}),
+    (6305, {"name": "มานะ พากเพียร", "gpa": 3.65, "courses": ["CS102", "MATH102"]})
+]
+
+for student_id, info in students:
+    btree.insert(student_id, info)
+
+btree.display()
+```
+![alt text](image-1.png)
 
 ### การทดลองที่ 5: ตัวอย่างการใช้งานจริง :ระบบทะเบียนนักศึกษา
 
@@ -317,10 +680,71 @@ def get_student_info(student_id):
 # ทดสอบค้นหา
 get_student_info(6301)
 ```
+![alt text](image-2.png)
 
 ## แบบฝึกหัด
 1. ให้นักศึกษาเพิ่มเมธอดสำหรับลบข้อมูล (key และ data) ออกจาก B-Tree
+```python
+    def delete(self, key):
+        print(f"ลบยังไม่ถูกพัฒนาเต็มรูปแบบ (ต้องเพิ่มการจัดการการ merge และ borrow)")
+
+    BTree.delete = delete
+```
 2. ให้นักศึกษาเพิ่มเมธอดสำหรับอัปเดตข้อมูล (data) สำหรับ key ที่กำหนด
+```python
+    def update(self, key, new_data):
+        node_data = self.search(key)
+        if node_data:
+            node_data.update(new_data)
+            print(f"อัปเดตข้อมูลสำเร็จสำหรับ key {key}")
+        else:
+            print("ไม่พบข้อมูลเพื่ออัปเดต")
+
+    BTree.update = update
+
+    # ทดสอบอัปเดต
+    btree.update(6302, {"gpa": 3.95})
+    get_student_info(6302)
+```
 3. ให้นักศึกษาเพิ่มเมธอดสำหรับแสดงข้อมูลทั้งหมดใน B-Tree เรียงตาม key
+```python
+    def display_sorted(self):
+        def _in_order(node):
+            if node:
+                for i in range(len(node.keys)):
+                    if not node.leaf:
+                        _in_order(node.children[i])
+                    print(f"{node.keys[i]}: {node.data[i]['name']} | GPA: {node.data[i]['gpa']}")
+                if not node.leaf:
+                    _in_order(node.children[-1])
+        _in_order(self.root)
+
+    BTree.display_sorted = display_sorted
+
+    # แสดงข้อมูลเรียงตาม key
+    btree.display_sorted()
+```
 4. ให้นักศึกษาเพิ่มเมธอดสำหรับค้นหาข้อมูลแบบช่วง (range search)
+```python
+    def range_search(self, low, high):
+        results = []
+
+        def _range_search(node):
+            for i, key in enumerate(node.keys):
+                if key >= low and key <= high:
+                    results.append((key, node.data[i]))
+                if not node.leaf and (key >= low or i == 0):
+                    _range_search(node.children[i])
+            if not node.leaf:
+                _range_search(node.children[-1])
+
+        _range_search(self.root)
+        return results
+
+    BTree.range_search = range_search
+
+    # ค้นหานักศึกษารหัส 6302 ถึง 6304
+    for key, data in btree.range_search(6302, 6304):
+        print(f"รหัส: {key} | ชื่อ: {data['name']} | GPA: {data['gpa']}")
+```
    
