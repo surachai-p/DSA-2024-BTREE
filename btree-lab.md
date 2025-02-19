@@ -299,7 +299,7 @@ def _split_child(self, parent, i):
    #แสดงโครงสร้างของ B-Tree
    btree.display()
    ```
-   ![รูปผลการรันโปรแกรม](./YourImagepath/image.png)
+   ![image](https://github.com/user-attachments/assets/55ee0f47-4eb7-4845-b7b7-165d4ed9d5a1)
 
 2. แก้ไข class B-Tree ให้มีการเก็บจำนวน Entry สูงสุด และต่ำสุด แทนการใช้ get_min_keys และ get_max_keys
    ```python
