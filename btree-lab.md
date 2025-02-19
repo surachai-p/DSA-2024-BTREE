@@ -202,7 +202,7 @@ def _split_child(self, parent, i):
 ### ผลการทดลองที่ 2
 1. เขียนโปรแกรมเพื่อเพิ่มข้อมูลนักศึกษา 5 คน รันโปรแกรมและบันทึกรูปผลการรันโปรแกรม
    ```python
-[class BTreeNode:
+   class BTreeNode:
     def __init__(self, leaf=True):
         self.leaf = leaf
         self.keys = []
@@ -274,9 +274,10 @@ class BTree:
     student_name = input("Enter Student Name: ")
     btree.insert(student_id, student_name)
    print("\nB-Tree Structure:")
-   btree.print_tree()]
+   btree.print_tree()
    ```
-![Screenshot 2025-02-19 151408](https://github.com/user-attachments/assets/80528029-d1bb-4230-9052-6a3a4dba1b54)
+![Screenshot 2025-02-19 151408](https://github.com/user-attachments/assets/d428dc0c-162c-41de-b40d-e00611e976b2)
+
 
 2. แก้ไข class B-Tree ให้มีการเก็บจำนวน Entry สูงสุด และต่ำสุด แทนการใช้ get_min_keys และ get_max_keys
    ```python
