@@ -205,15 +205,18 @@ def _split_child(self, parent, i):
 ```
 ### ผลการทดลองที่ 2
 1. เขียนโปรแกรมเพื่อเพิ่มข้อมูลนักศึกษา 5 คน รันโปรแกรมและบันทึกรูปผลการรันโปรแกรม
-   ```python
-   [บันทึก Code Python ที่นี่]
-   ```
-   ![รูปผลการรันโปรแกรม](./YourImagepath/image.png)
+![image](https://github.com/user-attachments/assets/73513ea9-83a7-4ca8-837d-cb0c1527fdc9)
+
+
+
+
 
 2. แก้ไข class B-Tree ให้มีการเก็บจำนวน Entry สูงสุด และต่ำสุด แทนการใช้ get_min_keys และ get_max_keys
-   ```python
-   [Code Python ที่ปรับปรุงแล้ว]
-   ```
+![image](https://github.com/user-attachments/assets/cdb175ad-0437-4db2-af4b-713634077d3a)
+
+
+
+
 
 
 ### การทดลองที่ 3: การค้นหาข้อมูลใน B-Tree
@@ -249,10 +252,12 @@ def search(self, key):
 ```
 ### ผลการทดลอง
 1. เขียนโปรแกรมเพื่อทดสอบการค้นหาข้อมูลใน B-Tree ตามข้อมูลที่ได้เพิ่มในการทดลองก่อนหน้า
-   ```python
-   [บันทึก Code Python ที่นี่]
-   ```
-   ![รูปผลการรันโปรแกรม](./YourImagepath/image.png)
+![image](https://github.com/user-attachments/assets/7e36380c-adb0-4ff9-b317-75a6850d3768)
+
+
+
+![image](https://github.com/user-attachments/assets/1eae8b02-6d86-4030-af4e-0b98fe0f9221)
+
 
 ### การทดลองที่ 4: การแสดงผล B-Tree
 
@@ -275,10 +280,12 @@ def display(self):
 ```
 ### ผลการทดลอง
 1. เขียนโปรแกรมเพื่อทดสอบการแสดงข้อมูลใน B-Tree 
-   ```python
-   [บันทึก Code Python ที่นี่]
-   ```
-   ![รูปผลการรันโปรแกรม](./YourImagepath/image.png)
+![image](https://github.com/user-attachments/assets/5a1daccc-c41c-46e5-9ef2-888a84e6dbcf)
+
+
+
+![image](https://github.com/user-attachments/assets/f4ce27c8-b8d6-45b6-9824-8926135bf93e)
+
 
 ### การทดลองที่ 5: ตัวอย่างการใช้งานจริง :ระบบทะเบียนนักศึกษา
 
@@ -323,8 +330,20 @@ get_student_info(6301)
 ```
 
 ## แบบฝึกหัด
-1. ให้นักศึกษาเพิ่มเมธอดสำหรับลบข้อมูล (key และ data) ออกจาก B-Tree
+1. ให้นักศึกษาเพิ่มเมธอดสำหรับลบข้อมูล (key และ data) ออกจาก B-Tree 
+![image](https://github.com/user-attachments/assets/3b2f0d61-eef1-4a21-8a1a-8844fd0c345a)
+![image](https://github.com/user-attachments/assets/fcd794e4-6a4f-470c-887e-57a5e16bc6d7)
+
 2. ให้นักศึกษาเพิ่มเมธอดสำหรับอัปเดตข้อมูล (data) สำหรับ key ที่กำหนด
+![image](https://github.com/user-attachments/assets/21821d03-9b92-407d-b128-5a11b339ea2f)
+![image](https://github.com/user-attachments/assets/70308e35-8e02-46bc-8439-7aa764ee1f6f)
+
 3. ให้นักศึกษาเพิ่มเมธอดสำหรับแสดงข้อมูลทั้งหมดใน B-Tree เรียงตาม key
+![image](https://github.com/user-attachments/assets/6a9018a8-e669-4753-a58a-2c91ca5b2473)
+![image](https://github.com/user-attachments/assets/c73942f0-1d94-4fd0-8218-3749747c574a)
+
 4. ให้นักศึกษาเพิ่มเมธอดสำหรับค้นหาข้อมูลแบบช่วง (range search)
-   
+![image](https://github.com/user-attachments/assets/3356ebac-04db-4114-9f23-f20b6a8427bf)
+![image](https://github.com/user-attachments/assets/3e87c5ec-5a0f-4357-8ae9-3b14eca0f03b)
+
+
