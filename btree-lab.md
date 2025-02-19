@@ -178,12 +178,16 @@ def _split_child(self, parent, i):
     # สร้างโหนดใหม่
     new_node = BTreeNode(child.leaf)
     
-    # คำนวณตำแหน่งกลาง
-    mid = order // 2
+    # คำนวณตำแหน่งกลาง (แก้ไขจากเดิม)
+    mid = (order - 1) // 2
     
     # ย้าย keys และ data ไปยังโหนดใหม่
-    new_node.keys = child.keys[mid:]
-    new_node.data = child.data[mid:]
+    new_node.keys = child.keys[mid+1:]  # แก้ไขจากเดิม
+    new_node.data = child.data[mid+1:]  # แก้ไขจากเดิม
+    
+    # เก็บค่า key และ data ตรงกลางไว้
+    mid_key = child.keys[mid]
+    mid_data = child.data[mid]
     
     # ตัด keys และ data ของโหนดเดิม
     child.keys = child.keys[:mid]
@@ -191,12 +195,12 @@ def _split_child(self, parent, i):
     
     # ถ้าไม่ใช่ใบ ต้องย้ายลูกด้วย
     if not child.leaf:
-        new_node.children = child.children[mid:]
-        child.children = child.children[:mid]
+        new_node.children = child.children[mid+1:]  # แก้ไขจากเดิม
+        child.children = child.children[:mid+1]     # แก้ไขจากเดิม
     
     # เพิ่ม key และ data ตรงกลางไปยัง parent
-    parent.keys.insert(i, child.keys[mid])
-    parent.data.insert(i, child.data[mid])
+    parent.keys.insert(i, mid_key)
+    parent.data.insert(i, mid_data)
     parent.children.insert(i + 1, new_node)
 ```
 ### ผลการทดลองที่ 2
