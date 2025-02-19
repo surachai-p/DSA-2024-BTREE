@@ -830,11 +830,11 @@ class BTree:
         # 🔹 1. ถ้า key อยู่ในโหนดปัจจุบัน
         if i < len(node.keys) and node.keys[i] == key:
             if node.leaf:
-                # 🔸 ถ้าเป็นโหนดใบ ลบ key ได้เลย
+                #  ถ้าเป็นโหนดใบ ลบ key ได้เลย
                 del node.keys[i]
                 del node.data[i]
             else:
-                # 🔸 ถ้าเป็นโหนดภายใน ใช้ Predecessor หรือ Successor
+                #  ถ้าเป็นโหนดภายใน ใช้ Predecessor หรือ Successor
                 if len(node.children[i].keys) >= self.min_keys + 1:
                     pred_key, pred_data = self._get_predecessor(node.children[i])
                     node.keys[i], node.data[i] = pred_key, pred_data
@@ -844,18 +844,18 @@ class BTree:
                     node.keys[i], node.data[i] = succ_key, succ_data
                     self.delete(succ_key, node.children[i+1])
                 else:
-                    # 🔸 รวมโหนดถ้าทั้งสองลูกมี key น้อยเกินไป
+                    # รวมโหนดถ้าทั้งสองลูกมี key น้อยเกินไป
                     self._merge_nodes(node, i)
                     self.delete(key, node.children[i])
         else:
-            # 🔹 2. ถ้า key ไม่อยู่ในโหนดปัจจุบัน ให้ค้นหาในโหนดลูกที่เหมาะสม
+            #  2. ถ้า key ไม่อยู่ในโหนดปัจจุบัน ให้ค้นหาในโหนดลูกที่เหมาะสม
             if node.leaf:
                 print(f"ไม่พบรหัส {key} ใน B-Tree")
                 return
 
             child = node.children[i]
             if len(child.keys) == self.min_keys:
-                # 🔹 ดึง key จากพี่น้องหรือรวมโหนดถ้าจำเป็น
+                #  ดึง key จากพี่น้องหรือรวมโหนดถ้าจำเป็น
                 self._balance_child(node, i)
 
             self.delete(key, node.children[i])
@@ -911,20 +911,20 @@ class BTree:
         else:
             self._merge_nodes(parent, i)
 
-# ✅ ทดสอบลบข้อมูล
-btree = BTree(order=3)
-students = [(101, "Alice"), (203, "Bob"), (150, "Charlie"), (99, "David"), (175, "Eve")]
-for sid, name in students:
-    btree.insert(sid, name)
-
-print("\n🔹 โครงสร้าง B-Tree ก่อนลบ:")
-btree.display()
-
-delete_id = int(input("\nป้อนรหัสที่ต้องการลบ: "))
-btree.delete(delete_id)
-
-print("\n🔹 โครงสร้าง B-Tree หลังลบ:")
-btree.display()
+      # ทดสอบลบข้อมูล
+      btree = BTree(order=3)
+      students = [(101, "Alice"), (203, "Bob"), (150, "Charlie"), (99, "David"), (175, "Eve")]
+      for sid, name in students:
+          btree.insert(sid, name)
+      
+      print("\n🔹 โครงสร้าง B-Tree ก่อนลบ:")
+      btree.display()
+      
+      delete_id = int(input("\nป้อนรหัสที่ต้องการลบ: "))
+      btree.delete(delete_id)
+      
+      print("\n🔹 โครงสร้าง B-Tree หลังลบ:")
+      btree.display()
 
 
 ```
