@@ -208,11 +208,11 @@ def _split_child(self, parent, i):
    ```python
    [บันทึก Code Python ที่นี่]
    ```
-   ![รูปผลการรันโปรแกรม](./YourImagepath/image.png)
+   ![(image.png)](![โค้ด](image-2.png))
 
 2. แก้ไข class B-Tree ให้มีการเก็บจำนวน Entry สูงสุด และต่ำสุด แทนการใช้ get_min_keys และ get_max_keys
    ```python
-   [Code Python ที่ปรับปรุงแล้ว]
+   [![โค้ด](image-3.png)]
    ```
 
 
@@ -252,7 +252,7 @@ def search(self, key):
    ```python
    [บันทึก Code Python ที่นี่]
    ```
-   ![รูปผลการรันโปรแกรม](./YourImagepath/image.png)
+   ![(image-4.png)]((image-5.png))
 
 ### การทดลองที่ 4: การแสดงผล B-Tree
 
@@ -278,7 +278,7 @@ def display(self):
    ```python
    [บันทึก Code Python ที่นี่]
    ```
-   ![รูปผลการรันโปรแกรม](./YourImagepath/image.png)
+   ![(image-7.png)]((image-6.png)
 
 ### การทดลองที่ 5: ตัวอย่างการใช้งานจริง :ระบบทะเบียนนักศึกษา
 
