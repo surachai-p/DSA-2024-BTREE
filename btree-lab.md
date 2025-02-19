@@ -316,7 +316,6 @@ btree.display()
 ## โค้ด
    ```python
    [Code Python ที่ปรับปรุงแล้ว]
-   ```
 class BTreeNode:
     def __init__(self, leaf=True):
         self.leaf = leaf
@@ -410,6 +409,8 @@ for _ in range(num_students):
 # แสดงโครงสร้างของ B-Tree
 btree.display()
 
+
+   ```
 
 
 
