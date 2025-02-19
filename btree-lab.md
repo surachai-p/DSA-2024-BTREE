@@ -310,7 +310,7 @@ def _split_child(self, parent, i):
         self.data = []
         self.children = []
 
-class BTree:
+   class BTree:
     def __init__(self, order):
         self.root = None
         self.order = order
@@ -382,18 +382,18 @@ class BTree:
         for child in node.children:
             self.display(child, level + 1)
 
-# สร้าง B-Tree ที่มี order 3
-btree = BTree(order=3)
-
-# รับข้อมูลนักศึกษาจากผู้ใช้
-num_students = int(input("ป้อนจำนวนนักศึกษา: "))
-for _ in range(num_students):
-    sid = int(input("ป้อนรหัสนักศึกษา: "))
-    name = input("ป้อนชื่อนักศึกษา: ")
-    btree.insert(sid, name)
-
-# แสดงโครงสร้างของ B-Tree
-btree.display()
+      # สร้าง B-Tree ที่มี order 3
+      btree = BTree(order=3)
+      
+      # รับข้อมูลนักศึกษาจากผู้ใช้
+      num_students = int(input("ป้อนจำนวนนักศึกษา: "))
+      for _ in range(num_students):
+          sid = int(input("ป้อนรหัสนักศึกษา: "))
+          name = input("ป้อนชื่อนักศึกษา: ")
+          btree.insert(sid, name)
+      
+      # แสดงโครงสร้างของ B-Tree
+      btree.display()
 
 
    ```
