@@ -618,31 +618,31 @@ def display(self):
     "name": "เอย",
     "gpa": 3.75,
     "courses": ["CS101", "CS102"]
-})
+   })
 
    register_student(6302, {
     "name": "อารีน่า",
     "gpa": 3.85,
     "courses": ["CS101", "MATH101"]
-})
+   })
 
    register_student(6303, {
     "name": "อิ๋ง",
     "gpa": 3.50,
     "courses": ["CS102", "ENG101"]
-})
+   })
 
    register_student(6304, {
     "name": "เนย",
     "gpa": 3.95,
     "courses": ["CS103", "CS104"]
-})
+   })
 
    register_student(6305, {
     "name": "ตุรกี",
     "gpa": 3.60,
     "courses": ["MATH102", "ENG101"]
-})
+   })
 
    # แสดงโครงสร้างของ B-Tree
    registration_system.display()
@@ -697,7 +697,17 @@ get_student_info(6301)
 
 ## แบบฝึกหัด
 1. ให้นักศึกษาเพิ่มเมธอดสำหรับลบข้อมูล (key และ data) ออกจาก B-Tree
+   ![Screenshot 2025-02-19 165104](https://github.com/user-attachments/assets/016a5f35-b85d-416d-b191-818011f322fb)
+
 2. ให้นักศึกษาเพิ่มเมธอดสำหรับอัปเดตข้อมูล (data) สำหรับ key ที่กำหนด
+   ![Screenshot 2025-02-19 171417](https://github.com/user-attachments/assets/e90df133-9ef5-4ab1-b3d1-6febc87a3654)
+
 3. ให้นักศึกษาเพิ่มเมธอดสำหรับแสดงข้อมูลทั้งหมดใน B-Tree เรียงตาม key
-4. ให้นักศึกษาเพิ่มเมธอดสำหรับค้นหาข้อมูลแบบช่วง (range search)
+
+![Screenshot 2025-02-19 170901](https://github.com/user-attachments/assets/6f4df2d4-83c2-473c-b12a-1db4d0db64c8)
+
+
+5. ให้นักศึกษาเพิ่มเมธอดสำหรับค้นหาข้อมูลแบบช่วง (range search)
+   ![Screenshot 2025-02-19 171334](https://github.com/user-attachments/assets/88534ea7-9866-45da-aaff-1d85b4b5a815)
+
    
