@@ -339,13 +339,13 @@ get_student_info(6301)
 
 3. ให้นักศึกษาเพิ่มเมธอดสำหรับแสดงข้อมูลทั้งหมดใน B-Tree เรียงตาม key
 รูปโค้ดการทดลอง 
-![alt text](Picture/code1.1.png)
+![alt text](Picture/code1.3.png)
 รูปผลการทดลอง
-![alt text](<Picture/สกรีนช็อต 2025-02-19 163330.png>)
+![alt text](<Picture/สกรีนช็อต 2025-02-19 164706.png>)
 
 4. ให้นักศึกษาเพิ่มเมธอดสำหรับค้นหาข้อมูลแบบช่วง (range search)
 รูปโค้ดการทดลอง 
-![alt text](Picture/code1.1.png)
+![alt text](Picture/code1.4.png)
 รูปผลการทดลอง
-![alt text](<Picture/สกรีนช็อต 2025-02-19 163330.png>)
+![alt text](<Picture/สกรีนช็อต 2025-02-19 165351.png>)
    
