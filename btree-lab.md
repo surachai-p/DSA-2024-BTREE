@@ -251,6 +251,8 @@ def search(self, key):
    ```python
    [บันทึก Code Python ที่นี่]
    ```
+   ![alt text](code3.png)
+   ![alt text](<สกรีนช็อต 2025-02-19 160436.png>)
    ![รูปผลการรันโปรแกรม](./YourImagepath/image.png)
 
 ### การทดลองที่ 4: การแสดงผล B-Tree
