@@ -679,4 +679,6 @@ get_student_info(6301)
 ![alt text](image-8.png)
 
 4. ให้นักศึกษาเพิ่มเมธอดสำหรับค้นหาข้อมูลแบบช่วง (range search)
+![image](https://github.com/user-attachments/assets/656b6291-a9cd-43c0-9dbc-b7a6128ede7b)
+
    
