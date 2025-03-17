@@ -83,6 +83,45 @@ class BTree:
         
         return self.search(key, node.children[i])
     
+    def update(self, key, new_data, node=None):
+        if node is None:
+            node = self.root
+        
+        i = 0
+        while i < len(node.keys) and key > node.keys[i]:
+            i += 1
+        
+        if i < len(node.keys) and key == node.keys[i]:
+            node.data[i] = new_data
+            return True
+        
+        if node.leaf:
+            return False
+        
+        return self.update(key, new_data, node.children[i])
+    
+    def delete(self, key, node=None):
+        if node is None:
+            node = self.root
+        
+        if node is None:
+            return
+        
+        i = 0
+        while i < len(node.keys) and key > node.keys[i]:
+            i += 1
+        
+        if i < len(node.keys) and node.keys[i] == key:
+            if node.leaf:
+                del node.keys[i]
+                del node.data[i]
+            else:
+                node.keys[i] = node.children[i + 1].keys[0]
+                node.data[i] = node.children[i + 1].data[0]
+                self.delete(node.keys[i], node.children[i + 1])
+        elif not node.leaf:
+            self.delete(key, node.children[i])
+    
     def display(self):
         def _display(node, level):
             if node:
@@ -134,3 +173,19 @@ for key in search_keys:
 
 # ทดสอบการแสดงโครงสร้าง B-Tree
 btree.display()
+
+# ทดสอบการอัปเดตข้อมูล
+update_entries = [(3, "นักรบ"), (5, "ขนมจีบ")]
+for key, new_data in update_entries:
+    if btree.update(key, new_data):
+        print(f"อัปเดตข้อมูลรหัส {key} เป็น {new_data}")
+    else:
+        print(f"ไม่พบข้อมูลรหัส {key} สำหรับอัปเดต")
+    btree.display()
+
+# ทดสอบการลบข้อมูล
+delete_keys = [3, 5]
+for key in delete_keys:
+    print(f"\nลบข้อมูลรหัส {key}")
+    btree.delete(key)
+    btree.display()

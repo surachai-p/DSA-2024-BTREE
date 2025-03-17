@@ -83,6 +83,45 @@ class BTree:
         
         return self.search(key, node.children[i])
     
+    def update(self, key, new_data, node=None):
+        if node is None:
+            node = self.root
+        
+        i = 0
+        while i < len(node.keys) and key > node.keys[i]:
+            i += 1
+        
+        if i < len(node.keys) and key == node.keys[i]:
+            node.data[i] = new_data
+            return True
+        
+        if node.leaf:
+            return False
+        
+        return self.update(key, new_data, node.children[i])
+    
+    def delete(self, key, node=None):
+        if node is None:
+            node = self.root
+        
+        if node is None:
+            return
+        
+        i = 0
+        while i < len(node.keys) and key > node.keys[i]:
+            i += 1
+        
+        if i < len(node.keys) and node.keys[i] == key:
+            if node.leaf:
+                del node.keys[i]
+                del node.data[i]
+            else:
+                node.keys[i] = node.children[i + 1].keys[0]
+                node.data[i] = node.children[i + 1].data[0]
+                self.delete(node.keys[i], node.children[i + 1])
+        elif not node.leaf:
+            self.delete(key, node.children[i])
+    
     def display(self):
         def _display(node, level):
             if node:
@@ -97,6 +136,40 @@ class BTree:
         print("B-Tree Structure:")
         _display(self.root, 0)
     
+    def display_sorted(self, node=None):
+        if node is None:
+            node = self.root
+        if node is None:
+            return
+        
+        for i in range(len(node.keys)):
+            if not node.leaf:
+                self.display_sorted(node.children[i])
+            print(f"Key: {node.keys[i]}, Data: {node.data[i]}")
+        
+        if not node.leaf:
+            self.display_sorted(node.children[-1])
+    
+    def range_search(self, min_key, max_key, node=None, results=None):
+        if node is None:
+            node = self.root
+        if results is None:
+            results = []
+        
+        if node is None:
+            return results
+        
+        for i in range(len(node.keys)):
+            if not node.leaf:
+                self.range_search(min_key, max_key, node.children[i], results)
+            if min_key <= node.keys[i] <= max_key:
+                results.append((node.keys[i], node.data[i]))
+        
+        if not node.leaf:
+            self.range_search(min_key, max_key, node.children[-1], results)
+        
+        return results
+    
     def print_tree(self, node=None):
         if node is None:
             node = self.root
@@ -104,33 +177,3 @@ class BTree:
         print("Keys:", node.keys, "Data:", node.data)
         for child in node.children:
             self.print_tree(child)
-
-# สร้าง B-Tree ที่มี order = 3
-btree = BTree(order=3)
-
-# เพิ่มข้อมูลนักศึกษา
-students = [
-    (1, "กรรณิการ์"),
-    (2, "อัศวิน"),
-    (3, "ปราบปราม"),
-    (4, "ข้าวเกรียบ"),
-    (5, "ปากหม้อ")
-]
-
-for student_id, name in students:
-    btree.insert(student_id, name)
-
-# แสดงผลต้นไม้
-btree.print_tree()
-
-# ทดสอบการค้นหาข้อมูล
-search_keys = [1, 3, 5, 6]
-for key in search_keys:
-    result = btree.search(key)
-    if result:
-        print(f"พบข้อมูลสำหรับรหัส {key}: {result}")
-    else:
-        print(f"ไม่พบข้อมูลสำหรับรหัส {key}")
-
-# ทดสอบการแสดงโครงสร้าง B-Tree
-btree.display()
